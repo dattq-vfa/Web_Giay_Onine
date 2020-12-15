@@ -30,4 +30,4 @@ const user_controllers = require('./user_controllers');
 router.use('/',user_controllers);
 
 
-module.exports = router; //xuat ra du lieu de su dung
+module.exports = router; //xuat ra du lieu de su dung 
