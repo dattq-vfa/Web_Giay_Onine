@@ -1,0 +1,45 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 13pt;
+}
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+    color: black;
+}
+
+
+.header{
+    height: 100px;
+    background-color: black;
+    line-height: 60px;
+    text-align: center;
+    color: white;
+}
+.footer{
+    height: 60px;
+    background-color: black;
+    line-height: 60px;
+    text-align: center;
+    color: white;
+}
+main{
+    background-color: rgb(247, 241, 234);
+}
+.container{
+    padding: 20px;
+}
+.left {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border: rgb(134, 130, 130) 1px solid;
+
+}
+.content{
+
+    width: 100%;
+    background-color: rgb(224, 190, 53);
+}
