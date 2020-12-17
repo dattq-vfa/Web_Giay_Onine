@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MWC</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/public/style.css"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -17,21 +17,24 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 left">
-                    <div class="list-group">
-                        <a href="/admin/home_page" class="list-group-item active">HOME PAGE</a>
-                        <a href="/admin/introduction" class="list-group-item">INTRODUCTION</a>
-                        <a href="/admin/categories" class="list-group-item">CATEGORIES</a>
-                        <a href="/admin/categories/boy" class="list-group-item">CATEGORIES BOY</a>
-                        <a href="/admin/categories/girl" class="list-group-item">CATEGORIES GIRL</a>
-                        <a href="/admin/categories/child" class="list-group-item">CATEGORIES CHILD</a>
-                        <a href="/admin/categories/other" class="list-group-item">CATEGORIES OTHER</a>
-                        <a href="/admin/news" class="list-group-item">NEWS</a>
-                        <a href="/admin/contact" class="list-group-item">CONTACT</a>
-                        <a href="/admin/user" class="list-group-item">USER</a>
-                      </div>
+                    <div class="container">
+                        <div class="list-group">
+                            <a href="/" class="list-group-item active">HOME PAGE</a>
+                            <a href="/admin/introduction" class="list-group-item">INTRODUCTION</a>
+                            <a href="/admin/categories/boy" class="list-group-item">CATEGORIES BOY</a>
+                            <a href="/admin/categories/girl" class="list-group-item">CATEGORIES GIRL</a>
+                            <a href="/admin/categories/child" class="list-group-item">CATEGORIES CHILD</a>
+                            <a href="/admin/categories/other" class="list-group-item">CATEGORIES OTHER</a>
+                            <a href="/admin/news" class="list-group-item">NEWS</a>
+                            <a href="/admin/contact" class="list-group-item">CONTACT</a>
+                            <a href="/admin/user" class="list-group-item">USER</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-9 content">
-                    <div class="main"><%- include(main); %></div>
+                <div class="col-sm-9">
+                    <div class="container">
+                        <div class="main"><%- include(main); %></div>
+                    </div>
                 </div>
             </div>
         </div>

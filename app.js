@@ -3,7 +3,7 @@ const app = express();
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/',express.static('public'));
+app.use('/public',express.static('public')); //khai báo public file kèm tên file public, nhớ thêm đưuòng dẫn /public/style.css bên index.ejs
 app.set('view engine', 'ejs');
 const jwt = require('jsonwebtoken');
 
