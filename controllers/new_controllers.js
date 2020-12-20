@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/admin/news',(req,res)=>{
+router.get('/news',(req,res)=>{
     main = 'news/new';
     res.render('index',{main:main});//gui du lieu khi su dung ejs
 });

@@ -10,15 +10,7 @@ const multer = require('multer');
 const storage = multer.diskStorage({
     //duong dan luu file
     destination: (req,file,cb)=>{
-        // if (!fs.existsSync('./uploads/uploads'))
-        // {
-        //     fs.mkdir('./uploads/uploads',err =>{//tao folder
-        //         if(err) throw err;
-        //         console.log('saved!');
-        //     });
-        
-        // }
-        cb(null,'uploads/uploads');
+        cb(null,'public/uploads/uploads');
     },
     //kiem tra file
     filename: (req,file,cb)=>{
@@ -35,15 +27,23 @@ const storage = multer.diskStorage({
         else
         {
             cb(null, Date.now() + '-' + file.originalname);
-            path += file.originalname +' ';//them cho nay de lay ten file, hoac req.files de lay chi tiet tat ca file
+            path += Date.now() + '-' + file.originalname +' ';//them cho nay de lay ten file, hoac req.files de lay chi tiet tat ca file
         }
     }
 });
-var limits = {fileSize: 1024*50}; // hieu la 200kb
+var limits = {fileSize: 1024*5000}; // hieu la 200kb
 // Gọi ra sử dụng
 const uploads = multer ({storage: storage, limits: limits}).array('img');//array neu iput nhieu file, con 1 file thi single
 router.post('/upload_file',(req,res)=>{
+
+    //tạo folder save img upload
+    if (!fs.existsSync('./public/uploads'))
+        {
+            fs.mkdirSync('./public/uploads');
+            fs.mkdirSync('./public/uploads/uploads');
+        }
     uploads(req, res, function(err){
+        
         if(path=='') 
         {
             path='No choosed Image';
@@ -63,8 +63,15 @@ router.post('/upload_file',(req,res)=>{
         path='';
     });
 });
+router.post('/SHOW_IMG',(req,res)=>{
+    let c =[];
+    fs.readdirSync("./public/uploads/uploads").forEach(file => {
+        c.push("/public/uploads/uploads/"+file);
+    });
+    res.send(c);
+})
 
-router.get('/admin/categories',(req,res)=>{
+router.get('/categories',(req,res)=>{
     main = 'categories/category_product';
     res.render('index',{main:main});//gui du lieu khi su dung ejs
 });

@@ -8,17 +8,8 @@ router.use('/',home_page_controllers);
 const introduction_controllers = require('./introduction_controllers');
 router.use('/',introduction_controllers);
 
-const category_boy_controllers = require('./category_boy_controllers');
+const category_boy_controllers = require('./category_controllers');
 router.use('/',category_boy_controllers);
-
-const category_girl_controllers = require('./category_girl_controllers');
-router.use('/',category_girl_controllers);
-
-const category_child_controllers = require('./category_child_controllers');
-router.use('/',category_child_controllers);
-
-const category_other_controllers = require('./category_other_controllers');
-router.use('/',category_other_controllers);
 
 const new_controllers = require('./new_controllers');
 router.use('/',new_controllers);

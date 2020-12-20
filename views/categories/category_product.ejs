@@ -1,30 +1,35 @@
 <div class="container">
 
-    <div class="dropdown form-group">
-        <label for="cars">Type: </label>
-        <select id="TYPE" name="TYPE" class="btn btn-primary ">
+    <div class="dropdown form-group ">
+        <label for="TYPE">Type: 
+          <select id="TYPE" name="TYPE" class="btn btn-primary ">
             <option value="Boy">Boy</option>
             <option value="Girl">Girl</option>
             <option value="Child">Child</option>
             <option value="Other">Other</option>
           </select>
-        <label for="cars">Group: </label>
-        <select id="TYPE" name="TYPE" class="btn btn-primary ">
+        </label>
+        
+        <label for="Group">Group: 
+          <select id="Group" name="Group" class="btn btn-primary ">
             <option value="Classic">Classic</option>
             <option value="One Star">One Star</option>
           </select>
+        </label>
+        
     </div>
 
   <div class="row">
-    <div class="col-sm-4 form-group">
+    <div class="col-sm-6 form-group">
       <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
     </div>
-    <div class="col-sm-3 form-group">
+    <div class="col-sm-5 form-group">
       <input class="form-control" id="price" name="price" placeholder="Price" type="text" required>
     </div>
   </div>
 
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Upload image</button>
+  <span id="path"></span>
   <br>
   <label for="content">Describe:</label>
   <textarea  class="form-group" name="content" id="content" placeholder="Describe" ></textarea>
@@ -58,11 +63,13 @@
                     <br>
                     (NOTE: Image must .jpg .png, dung luong khong duoc > 100kb)
               </div>
-              <div class="img" id="show_img"></div>
-              
+              <div class="imgs">
+                <div class="img" id="show_img"></div>
+              </div>
+
               <!-- Modal footer -->
               <div class="modal-footer">
-                <button type="button" id="upload_img" class="btn btn-success">Upload</button>
+                <button type="submit" class="btn btn-success">Upload</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
               </div>
         </form> 
@@ -71,19 +78,36 @@
     </div>
   </div>
 
-
   <script>
       $(document).ready(function(){
-        $('#upload_img').on('click', function(e){
+        let a ='';
+        $.ajax({
+                  url: 'SHOW_IMG',
+                  type: 'POST',
+                  success: function (result) {
+                    console.log(result)
+                    result.forEach(e => {
+                      $("#show_img").append( "<img src='"+e+"'>" );
+                    });  
+                  }
+                });
+        $('#upload_img').on('submit', function(e){
             e.preventDefault();
             $.ajax({
-                url:'upload_img',
-                type:'POST',
-                success: function (result) {
-                    $('#result').html(result);
-                }
-            });
+                    url: 'upload_file',
+                    type: 'POST',
+                    data: new FormData(this),// phai co this
 
+                    // cài đặt 3 cái cần để upload file
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+
+                    success: function (result) {
+                      $('#path').text(result.split("-")[1]);
+                      $("#show_img").append( "<img src='public/uploads/uploads/"+result+"'>" );
+                    }
+                });
             return false;
         });
       })

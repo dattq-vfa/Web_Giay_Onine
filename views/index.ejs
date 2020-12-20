@@ -6,6 +6,7 @@
     <title>MWC</title>
     <link rel="stylesheet" href="/public/style.css"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -13,29 +14,42 @@
 <body>
     <%- include('partials/header'); %> 
     <!-- master layout -->
-    <main>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 left">
-                    <div class="container">
-                        <div class="list-group">
-                            <a href="/" class="list-group-item active">HOME PAGE</a>
-                            <a href="/admin/introduction" class="list-group-item">INTRODUCTION</a>
-                            <a href="/admin/categories" class="list-group-item">CATEGORIES</a>
-                            <a href="/admin/news" class="list-group-item">NEWS</a>
-                            <a href="/admin/contact" class="list-group-item">CONTACT</a>
-                            <a href="/admin/user" class="list-group-item">USER</a>
-                        </div>
+    <div class="container-fluid" style="padding-top: 100px;">
+        <div class="sidebar">
+            <div class="list-group">
+                <a href="/" class="list-group-item active">HOME PAGE</a>
+                <a href="/introduction" class="list-group-item">INTRODUCTION</a>
+                <div id="accordion">
+                    <a class="card-link list-group-item" id="c" data-toggle="collapse" href="#collapseOne" class="list-group-item">
+                        CATEGORIES
+                        <i class="fa fa-caret-right" id="a" style="padding-left: 35px;"></i>
+                        <i class="fa fa-caret-down" id="b" style="padding-left: 35px; display: none;"></i>
+                    </a>
+                    <div id="collapseOne" class="collapse" data-parent="#accordion">
+                        <a href="/categories" class="list-group-item">LIST CATEGORIES</a>
+                        <a href="#" class="list-group-item">ADD CATEGORIES</a>
                     </div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="container">
-                        <div class="main"><%- include(main); %></div>
-                    </div>
-                </div>
+                  </div>                 
+                <a href="/news" class="list-group-item">NEWS</a>
+                <a href="/contact" class="list-group-item">CONTACT</a>
+                <a href="/user" class="list-group-item">USER</a>
             </div>
         </div>
-    </main> 
-    <%- include('partials/footer'); %> 
+        </div>
+        <div class="content">
+            <div class="main"><%- include(main); %></div>
+        </div>
+
+    </div>
 </body>
 </html>
+
+<script>
+    $(document).ready(function(){
+        $('#c').on('click',function(){
+            $('#a').hide();
+            $('#b').show();
+        })
+        
+    })
+</script>
