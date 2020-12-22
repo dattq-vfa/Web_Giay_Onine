@@ -71,8 +71,13 @@ router.post('/SHOW_IMG',(req,res)=>{
     res.send(c);
 })
 
-router.get('/categories',(req,res)=>{
-    main = 'categories/category_product';
+router.get('/add_categories',(req,res)=>{
+    main = 'categories/add_category_product';
+    res.render('index',{main:main});//gui du lieu khi su dung ejs
+});
+
+router.get('/list_categories',(req,res)=>{
+    main = 'categories/list_category_product';
     res.render('index',{main:main});//gui du lieu khi su dung ejs
 });
 

@@ -18,21 +18,27 @@
         <div class="sidebar">
             <div class="list-group">
                 <a href="/" class="list-group-item active">HOME PAGE</a>
-                <a href="/introduction" class="list-group-item">INTRODUCTION</a>
                 <div id="accordion">
-                    <a class="card-link list-group-item" id="c" data-toggle="collapse" href="#collapseOne" class="list-group-item">
+                    <a class="card-link list-group-item" id="effect" data-toggle="collapse" href="#collapseOne" class="list-group-item">
                         CATEGORIES
-                        <i class="fa fa-caret-right" id="a" style="padding-left: 35px;"></i>
-                        <i class="fa fa-caret-down" id="b" style="padding-left: 35px; display: none;"></i>
+                        <!-- <i class="fa fa-caret-right effect_1" style="padding-left: 35px;"></i>
+                        <i class="fa fa-caret-down effect_2" style="padding-left: 35px; display: none;"></i> -->
                     </a>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
-                        <a href="/categories" class="list-group-item">LIST CATEGORIES</a>
-                        <a href="#" class="list-group-item">ADD CATEGORIES</a>
+                        <a href="/list_categories" class="list-group-item">LIST CATEGORIES</a>
+                        <a href="/add_categories" class="list-group-item">ADD CATEGORIES</a>
                     </div>
-                  </div>                 
-                <a href="/news" class="list-group-item">NEWS</a>
-                <a href="/contact" class="list-group-item">CONTACT</a>
-                <a href="/user" class="list-group-item">USER</a>
+                  </div> 
+                  <div id="accordion1">
+                    <a class="card-link list-group-item" id="effect1" data-toggle="collapse" href="#collapseTwo" class="list-group-item">
+                        CATEGORIES
+                    </a>
+                    <div id="collapseTwo" class="collapse" data-parent="#accordion1">
+                        <a href="/user" class="list-group-item">LIST USER</a>
+                        <a href="/user/register" class="list-group-item">ADD USER</a>
+                    </div>
+                  </div>                   
+                
             </div>
         </div>
         </div>
@@ -46,10 +52,6 @@
 
 <script>
     $(document).ready(function(){
-        $('#c').on('click',function(){
-            $('#a').hide();
-            $('#b').show();
-        })
         
     })
 </script>

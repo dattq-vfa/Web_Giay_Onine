@@ -1,0 +1,69 @@
+
+<div class="row" style="padding-bottom: 10px;">
+    <div class="col-md-3">
+            <a href="user/member/list_delete" class="btn btn-warning">List deleted</a>
+    </div>
+    <div class="col-md-9">
+        <form class="form-inline justify-content-end" id="btn_search">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" id="text_search">
+            <button class="btn btn-success" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+<table class="table table-dark table-hover"">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Group</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="table">
+        <!-- <//%- str%> -->
+        <tbody>
+            <tr>
+              <td>John</td>
+              <td>Boy</td>
+              <td>MWC</td>
+              <td>300000</td>
+              <td>10</td>
+              <td>
+                <a href="user/edit/`+v._id+`" class="btn btn-info btn-adjust">Sửa</a>
+                <button type="button" class="btn btn-danger btn-adjust" data-toggle="modal" data-target="#myModal`+v._id+`">Xóa</button>
+            </td>
+            </tr>
+            <tr>
+                <td>Anna</td>
+                <td>Girl</td>
+                <td>Juno</td>
+                <td>100000</td>
+                <td>5</td>
+              <td>
+                <a href="user/edit/`+v._id+`" class="btn btn-info btn-adjust">Sửa</a>
+                <button type="button" class="btn btn-danger btn-adjust" data-toggle="modal" data-target="#myModal`+v._id+`">Xóa</button>
+            </td>
+            </tr>
+            <tr>
+                <td>Kutin</td>
+                <td>Boy</td>
+                <td>MWC</td>
+                <td>4500</td>
+                <td>102</td>
+              <td>
+                <a href="user/edit/`+v._id+`" class="btn btn-info btn-adjust">Sửa</a>
+                <button type="button" class="btn btn-danger btn-adjust" data-toggle="modal" data-target="#myModal`+v._id+`">Xóa</button>
+            </td>
+            </tr>
+        </tbody>
+    </tbody>
+  </table>
+
+  <ul class="pagination justify-content-end">
+    <li class="page-item active"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>

@@ -1,0 +1,58 @@
+<div class="container">
+    <h2>Add Account</h2>
+    <form id="create-account">
+        <label class="lable-input" for="usr">Name:
+            <input type="text" class="form-control" id="usr" name="user">
+        </label>
+        <label class="lable-input" for="usrname">User Name:
+            <input type="text" class="form-control" id="usrname" name="username">
+        </label>
+        <label class="lable-input" for="pwd">Password:
+            <input type="password" class="form-control" id="pwd" name="password">
+        </label>   
+        <label class="lable-input" for="phone">Phone:
+            <input type="text" class="form-control" id="phone" name="phone">
+        </label>      
+        <label class="lable-input" for="email">Email
+            <input type="email" class="form-control" id="email" name="email">
+        </label>
+        <label class="lable-input" for="address">Address:
+            <input type="text" class="form-control" id="address" name="address">
+        </label>       
+    </form>    
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Upload image</button>
+    <br><br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/user" class="btn btn-danger">Cancel</a>
+</div>
+    <!-- modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Upload Image</h4>
+          <span type="button" class="close" data-dismiss="modal">&times;</span>
+        </div>
+        <!-- //enctype="multipart/form-data" very important -->
+        <form id="upload_img" method="POST" enctype="multipart/form-data">
+            <!-- Modal body -->   
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="img">Image:</label>
+                    <input type="file" class="form-control" id="img" name="img">
+                </form>
+              </div>
+              
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Upload</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+              </div>
+        </form> 
+               
+      </div>
+    </div>
+  </div>
+</div>

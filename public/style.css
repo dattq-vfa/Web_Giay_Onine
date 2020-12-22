@@ -5,14 +5,15 @@
     font-size: 13pt;
 }
 
+
 .list-group a:hover{
     color: white;
     text-decoration: none;
-    background-color: rgb(131, 123, 112);
+    background-color:#0f1216;
 }
 .list-group a{
     color:white;
-    background-color:#020234;
+    background-color: #252c35;
     border-bottom: white solid 1px;
 }
 
@@ -28,10 +29,10 @@
     position: fixed;
     width: 100%;
     height: 100px;
-    background-color: rgb(33, 53, 21);
-    line-height: 60px;
+    background-color:  #252c35;
+    line-height: 100px;
     text-align: center;
-    color: white;
+    color:#ffffff;
     top: 0;
     z-index: 10;
 }
@@ -48,9 +49,13 @@
     color: white;
 }
 
+.group{
+  background-color: #007bff;
+}
+
 option{
-    background-color: blanchedalmond;
-    color: black;
+    background-color: #252c35;
+    color: white;
 }
 
 img:hover{
@@ -77,33 +82,60 @@ img:hover{
   .sidebar{
     left: 0px;
     width: 200px;
-    background-color:#020234;
+    background-color:#252c35;
     position: fixed;
     height: 100%;
-    overflow: auto;
+    z-index: 1;
   }
   .content{
-    background-color: rgb(202, 212, 236);
+    background-color: #f5f5fa;
     margin-left: 200px;
     padding: 0px 50px;
   }
-  @media screen and (max-width: 800px) {
-    .sidebar {
-      width: 100%;
-      position: relative;
-    }
-    .container-fluid{
-        padding-left: 0px !important;
-        padding-right: 0px !important;
-    }
-    .content {
-        margin-left: 0;
+  .form-input{
+    width: 50%;
+    min-width: 320px;
+  }
+  a.page-link{
+    border: none;
+    background-color: #f5f5fa;
+    color: black;
+  }
+  a.page-link:hover{
+    background-color: #9c9999  ;
+    color:black;
+  }
+  .page-item.active .page-link{
+    background-color: #37373b !important;
+    color:black !important;
+  }
+  @media screen and (max-width: 706px) {
+      .main{
+        padding: 20px 0px 0px 0px;
+        overflow-x: scroll;
+      }
+      .sidebar {
         width: 100%;
-        padding: 0px;
-    }
-    .list-group a{
-        text-align: center;
-    }
+        position: relative;
+      }
+      .container-fluid{
+          padding-left: 0px !important;
+          padding-right: 0px !important;
+      }
+      .content {
+          margin-left: 0;
+          width: 100%;
+          padding: 0px;
+      }
+      .form-input{
+        width: 100%;
+      }
+      .lable-input{
+        width: 100% !important;
+      }
+      .list-group a{
+          text-align: center;
+      }
   }
 
   .dropdown-container {
@@ -112,3 +144,66 @@ img:hover{
     padding-left: 8px;
   }
   
+  .btn-circle{
+    border-radius: 50% !important;
+  }
+  .btn-adjust{
+    padding: 2px !important;
+    border-radius: 5px !important;
+  }
+  td{
+    padding: 5px 5px 5px 13px!important;
+  }
+  .lable-input{
+    min-width: 300px;
+    font-weight: bold;
+  }
+
+/* mũi tên lên xuống tạo hiệu ứng */
+  [data-toggle="collapse"]:after {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      content: "\f0da";
+      transform: rotate(90deg) ;
+      transition: all linear 0.25s;
+      padding: 5px;
+      }   
+    [data-toggle="collapse"].collapsed:after {
+      transform: rotate(0deg) ;
+    }
+/*_________ mũi tên lên xuống tạo hiệu ứng ___________*/
+
+/* tạo button add  */
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(55, 139, 55);
+  min-width: 185px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  padding: 5px;
+  z-index: 1;
+}
+
+.show {
+  display: flex;
+  align-items: center;
+}
+
+#myInput{
+  border-radius: 8px;
+  width: 120px;
+  background-color: #f5f5fa;
+
+}
+#btn_add{
+  padding: 2px 10px 2px 10px;
+  border-radius: 5px !important;
+}
+
+/* tạo button add  */
