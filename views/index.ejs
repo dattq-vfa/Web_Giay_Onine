@@ -30,7 +30,7 @@
                     </div>
                   </div> 
                   <div id="accordion1">
-                    <a class="card-link list-group-item" id="effect1" data-toggle="collapse" href="#collapseTwo" class="list-group-item">
+                    <a onclick="t1('effect1')" class="card-link list-group-item" id="effect1" data-toggle="collapse" href="#collapseTwo" class="list-group-item">
                         CATEGORIES
                     </a>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion1">
@@ -52,6 +52,8 @@
 
 <script>
     $(document).ready(function(){
-        
+        function t1(e) {
+          document.getElementById(e).classList.toggle("t12");
+      }
     })
 </script>

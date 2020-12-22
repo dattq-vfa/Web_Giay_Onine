@@ -36,6 +36,9 @@
     top: 0;
     z-index: 10;
 }
+.header img:hover{
+  background-color: unset;
+}
 .main{
     padding: 20px;
 }
@@ -107,7 +110,7 @@ img:hover{
   }
   .page-item.active .page-link{
     background-color: #37373b !important;
-    color:black !important;
+    color:white !important;
   }
   @media screen and (max-width: 706px) {
       .main{
@@ -168,13 +171,17 @@ img:hover{
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       content: "\f0da";
-      transform: rotate(90deg) ;
       transition: all linear 0.25s;
       padding: 5px;
       }   
-    [data-toggle="collapse"].collapsed:after {
-      transform: rotate(0deg) ;
+    /* [data-toggle="collapse"].collapsed:after {
+      transform: rotate(90deg) ;
+    } */
+
+    .t12::after{
+      transform: rotate(90deg) !important;
     }
+
 /*_________ mũi tên lên xuống tạo hiệu ứng ___________*/
 
 /* tạo button add  */
@@ -182,24 +189,24 @@ img:hover{
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: rgb(55, 139, 55);
-  min-width: 185px;
+  background-color:   #262626;
+  min-width: 190px;
   overflow: auto;
   border: 1px solid #ddd;
   padding: 5px;
   z-index: 1;
 }
 
-.show {
+.show_add_btn {
   display: flex;
   align-items: center;
 }
 
 #myInput{
-  border-radius: 8px;
+  border: none;
   width: 120px;
-  background-color: #f5f5fa;
-
+  background-color:#262626;
+  color: white;
 }
 #btn_add{
   padding: 2px 10px 2px 10px;
