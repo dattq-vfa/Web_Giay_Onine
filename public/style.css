@@ -4,7 +4,9 @@
     box-sizing: border-box;
     font-size: 13pt;
 }
-
+html,body{
+  height: 100%;
+}
 a:hover{
   text-decoration: none !important;
 }
@@ -46,8 +48,8 @@ a:hover{
   list-style: none;
   padding: 0px 30px 0px 30px !important;
 }
-.main{
-    padding: 20px;
+.main_content{
+    padding: 20px 40px 0px 40px;
 }
 .dropdown-menu >li>a{
     display: block;
@@ -99,7 +101,11 @@ img:hover{
   }
   .content{
     margin-left: 200px;
-    padding: 0px 50px;
+    height: 100%;
+    /* padding: 0px 50px; */
+  }
+  .main{
+    height: 100%;
   }
   .form-input{
     width: 50%;
@@ -118,6 +124,7 @@ img:hover{
     background-color: #37373b !important;
     color:white !important;
   }
+
   @media screen and (max-width: 706px) {
       .main{
         padding: 20px 0px 0px 0px;
@@ -242,24 +249,26 @@ img:hover{
 /*----------------- Login form ------------------------*/
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
-html,body{
+.img_login{
+height: 100%;
+width: 100%;
 background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
 background-size: cover;
 background-repeat: no-repeat;
-height: 100%;
 font-family: 'Numans', sans-serif;
 background-attachment: fixed;
+
 }
 
 .container{
 height: 100%;
 align-content: center;
+
 }
 
 .card{
 height: 370px;
-margin-top: auto;
-margin-bottom: auto;
+margin-top:40px;
 width: 400px;
 background-color: rgba(0,0,0,0.5) !important;
 }
