@@ -1,46 +1,49 @@
 
+<!--Fontawesome CDN-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 <div class="container">
-    <form action="/action_page.php">
-      <div class="row">
-        <h2 style="text-align:center">Login with Social Media or Manually</h2>
-        <div class="vl">
-          <span class="vl-innertext">or</span>
-        </div>
-  
-        <div class="col">
-          <a href="#" class="fb btn">
-            <i class="fa fa-facebook fa-fw"></i> Login with Facebook
-           </a>
-          <a href="#" class="twitter btn">
-            <i class="fa fa-twitter fa-fw"></i> Login with Twitter
-          </a>
-          <a href="#" class="google btn"><i class="fa fa-google fa-fw">
-            </i> Login with Google+
-          </a>
-        </div>
-  
-        <div class="col">
-          <div class="hide-md-lg">
-            <p>Or sign in manually:</p>
-          </div>
-  
-          <input type="text" name="username" placeholder="Username" required>
-          <input type="password" name="password" placeholder="Password" required>
-          <input type="submit" value="Login">
-        </div>
-        
-      </div>
-    </form>
-  </div>
-  
-  <div class="bottom-container">
-    <div class="row">
-      <div class="col">
-        <a href="#" style="color:white" class="btn">Sign up</a>
-      </div>
-      <div class="col">
-        <a href="#" style="color:white" class="btn">Forgot password?</a>
-      </div>
-    </div>
-  </div>
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Sign In</h3>
+				<div class="d-flex justify-content-end social_icon">
+					<span><i class="fab fa-facebook-square"></i></span>
+					<span><i class="fab fa-google-plus-square"></i></span>
+					<span><i class="fab fa-twitter-square"></i></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<form>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" class="form-control" placeholder="username">
+						
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="password" class="form-control" placeholder="password">
+					</div>
+					<div class="row align-items-center remember">
+						<input type="checkbox">Remember Me
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Login" class="btn float-right login_btn">
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					Don't have an account?<a href="#">Sign Up</a>
+				</div>
+				<div class="d-flex justify-content-center">
+					<a href="#">Forgot your password?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
