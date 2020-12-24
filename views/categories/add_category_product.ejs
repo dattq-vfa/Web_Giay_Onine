@@ -9,7 +9,7 @@
             <option value="Child">Child</option>
             <option value="Other">Other</option>
           </select>
-          <button onclick="addFunction('add_1Dropdown')" class="btn btn-success btn-circle" ><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button onclick="addFunction('add_1Dropdown')" class="btn btn-outline-dark btn-circle" style="border: unset; color: white;"><i class="fa fa-plus" aria-hidden="true"></i></button>
           <div id="add_1Dropdown" class="dropdown-content">
             <input type="text" placeholder="Add Type..." id="myInput">
             <button class="btn btn-primary" id="btn_add" >Add</button>
@@ -21,7 +21,7 @@
             <option value="Classic">Classic</option>
             <option value="One Star">One Star</option>
           </select>
-          <button onclick="addFunction('add_2Dropdown')"   href="#" class="btn btn-success btn-circle"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button onclick="addFunction('add_2Dropdown')"   href="#" class="btn btn-outline-dark btn-circle" style="border: unset; color: white;"><i class="fa fa-plus" aria-hidden="true"></i></button>
           <div id="add_2Dropdown" class="dropdown-content">
             <input type="text" placeholder="Add Group..." id="myInput">
             <button class="btn btn-primary" id="btn_add" >Add</button>
@@ -44,12 +44,12 @@
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-image" style="font-size:24px"></i> Upload image</button>
   <span id="path"></span>
   <br>
-  <label for="content" style="font-weight: bold;">Describe:</label>
+  <label for="content"  class="color_text">Describe:</label>
   <textarea  class="form-group" name="content" id="content" placeholder="Describe" ></textarea>
   <div class="row">
-    <div class="col-sm-12 form-group">
-      <br>
+    <div class="col-sm-12 form-group" style="padding-top: 10px;">
       <button class="btn btn-primary" type="submit">Send</button>
+      <a href="/" class="btn btn-outline-danger" style="font-weight: bold;">Cancle</a>
     </div>
   </div>
 
@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <label for="img">Image:</label>
                     <!-- multiple neu input nhieu file -->
-                    <input type="file" class="form-control" id="img" name="img" multiple>
+                    <input type="file" class="form-control" id="img" name="img" multiple >
                     <br>
                     (NOTE: Image must .jpg .png, dung luong khong duoc > 100kb)
               </div>
@@ -84,7 +84,7 @@
               <!-- Modal footer -->
               <div class="modal-footer">
                 <button type="submit" class="btn btn-success">Upload</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
               </div>
         </form> 
                

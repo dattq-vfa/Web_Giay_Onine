@@ -6,11 +6,14 @@
 }
 html,body{
   height: 100%;
+  background-color: black;
 }
 a:hover{
   text-decoration: none !important;
 }
-
+.color_text{
+  color: white;
+}
 .list-group a:hover{
     color: white;
     text-decoration: none;
@@ -102,6 +105,7 @@ img:hover{
   .content{
     margin-left: 200px;
     height: 100%;
+    background-color: black;
     /* padding: 0px 50px; */
   }
   .main{
@@ -126,8 +130,11 @@ img:hover{
   }
 
   @media screen and (max-width: 706px) {
+      .img_login{
+        background-attachment: unset !important;
+      }
+
       .main{
-        padding: 20px 0px 0px 0px;
         overflow-x: scroll;
       }
       .sidebar {
@@ -173,6 +180,7 @@ img:hover{
   .lable-input{
     min-width: 300px;
     font-weight: bold;
+    color: #FFC312;
   }
 
 /* mũi tên lên xuống tạo hiệu ứng */
@@ -251,8 +259,8 @@ img:hover{
 
 .img_login{
 height: 100%;
-width: 100%;
-background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+width: auto;
+background-image: url('./background_img/img_login.jpg');
 background-size: cover;
 background-repeat: no-repeat;
 font-family: 'Numans', sans-serif;
@@ -321,13 +329,13 @@ margin-right: 5px;
 
 .login_btn{
 color: black;
-background-color: #FFC312;
+background-color: #FFC312 !important;
 width: 100px;
 }
 
 .login_btn:hover{
 color: black;
-background-color: white;
+background-color: white !important;
 }
 
 .links{
