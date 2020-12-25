@@ -7,7 +7,6 @@ app.use('/public',express.static('public')); //khai báo public file kèm tên f
 app.use('/uploads/uploads',express.static(__dirname + 'public/uploads/uploads'));
 app.set('view engine', 'ejs');
 const jwt = require('jsonwebtoken');
-
 //open api
 // Add headers
 app.use(function (req, res, next) {
