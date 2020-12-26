@@ -25,11 +25,7 @@ router.get('/user/register',(req,res)=>{
 
 router.get('/login',(req,res)=>{
     main = 'users/login';
-    str = `<a href="/" class="color-navbar">
-            <i class="fa fa-sign-out-alt"></i>
-            <i class="fa fa-sign-out"></i> Logout:
-        </a>`;
-    res.render('index',{main:main,str:str});//gui du lieu khi su dung ejs
+    res.render('index',{main:main});//gui du lieu khi su dung ejs
 });
 
 router.get('/sign_up',(req,res)=>{
@@ -151,15 +147,9 @@ router.post('/Login_user',(req,res)=>{
                             }
                             else
                             {
-                                // main = 'partials/main_home';
-                                // str = `<a href="/" class="color-navbar">
-                                //         <i class="fa fa-sign-out-alt"></i>
-                                //         <i class="fa fa-sign-out"></i> Logout
-                                //         </a>`;
                                 localStorage.setItem('token',token);
                                 localStorage.setItem('account',(data[0].name).toUpperCase());
                                 res.send('ok');
-                                // res.render('index',{main:main,str:str});
                             }
                         });
                     } 
@@ -172,6 +162,11 @@ router.post('/Login_user',(req,res)=>{
     });
 });
 
-
+router.get('/logout',(req,res)=>{
+    localStorage.removeItem('token');
+    localStorage.removeItem('account');
+    main = 'partials/main_home';
+    res.render('index',{main:main});//gui du lieu khi su dung ejs
+});
 
 module.exports = router; //xuat ra du lieu de su dung
