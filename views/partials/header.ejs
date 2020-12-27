@@ -2,17 +2,17 @@
     <base href="http://localhost:3000/">
     <ul class="navbar">
         <li>
-            <% if(localStorage.getItem('account')!='' | localStorage.getItem('account')== null) {%>
+            <% if(localStorage.getItem('account')=='' | localStorage.getItem('account')== null) {%>
+                <a href="login" class="color-navbar">
+                    <i class="fa fa-sign-in-alt"></i>
+                    <i class="fa fa-sign-in"></i> Login
+                </a>
+            <%} else{%>
                 <a href="logout" class="color-navbar">
                     <i class="fa fa-sign-out-alt"></i>
                     <i class="fa fa-sign-out"></i> Logout
                 </a>
                 <span id="name_login"><%=localStorage.getItem('account')%></span>
-            <%} else{%>
-                <a href="login" class="color-navbar">
-                    <i class="fa fa-sign-in-alt"></i>
-                    <i class="fa fa-sign-in"></i> Login
-                </a>
             <%}%>
         </li>
         <li>

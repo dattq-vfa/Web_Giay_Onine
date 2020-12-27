@@ -1,7 +1,7 @@
 <div class="main_content">
   <div class="container">
-
-    <div class="dropdown form-group">
+    <form id="add_category">
+      <div class="dropdown form-group">
         <label for="TYPE" class="group" style="font-weight: bold;">Type: 
           <select id="TYPE" name="TYPE" class="btn btn-primary">
             <option value="Boy">Boy</option>
@@ -28,80 +28,74 @@
           </div>
         </label>
         
-    </div>
-    <div class="form-input">
-        <div class="form-group">
-            <input class="form-control" id="name" name="name" placeholder="Name Product..." type="text" required>
-          </div>
-          <div class="form-group">
-            <input class="form-control" id="price" name="price" placeholder="Price..." type="text" required>
-          </div>
-          <div class="form-group">
-              <input class="form-control" id="quantity" name="quantity" placeholder="Quantity..." type="text" required>
-          </div>
-    </div>
-
-  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-image" style="font-size:24px"></i> Upload image</button>
-  <span id="path"></span>
-  <br>
-  <label for="content"  class="color_text">Describe:</label>
-  <textarea  class="form-group" name="content" id="content" placeholder="Describe" ></textarea>
-  <div class="row">
-    <div class="col-sm-12 form-group" style="padding-top: 10px;">
-      <button class="btn btn-primary" type="submit">Send</button>
-      <a href="/" class="btn btn-outline-danger" style="font-weight: bold;">Cancle</a>
-    </div>
-  </div>
-
-</div>
-
-
-<!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Upload Image</h4>
-          <span type="button" class="close" data-dismiss="modal">&times;</span>
-        </div>
-        <!-- //enctype="multipart/form-data" very important -->
-        <form id="upload_img" method="POST" enctype="multipart/form-data">
-            <!-- Modal body -->   
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="img">Image:</label>
-                    <!-- multiple neu input nhieu file -->
-                    <input type="file" class="form-control" id="img" name="img" multiple >
-                    <br>
-                    (NOTE: Image must .jpg .png, dung luong khong duoc > 100kb)
-              </div>
-              <div class="imgs">
-                <div class="img" id="show_img"></div>
-              </div>
-
-              <!-- Modal footer -->
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Upload</button>
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
-              </div>
-        </form> 
-               
       </div>
+      <div class="form-input">
+          <div class="form-group">
+              <input class="form-control" id="name" name="name" placeholder="Name Product..." type="text" required>
+            </div>
+            <div class="form-group">
+              <input class="form-control" id="price" name="price" placeholder="Price..." type="text" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="quantity" name="quantity" placeholder="Quantity..." type="text" required>
+            </div>
+      </div>
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-image" style="font-size:24px"></i> Upload image</button>
+      <span id="path"></span>
+      <br>
+      <label for="content"  class="color_text">Describe:</label>
+      <textarea  class="form-group" name="content" id="content" placeholder="Describe" ></textarea>
+      <div class="row">
+        <div class="col-sm-12 form-group" style="padding-top: 10px;">
+          <button class="btn btn-primary" type="submit">Send</button>
+          <a href="/" class="btn btn-outline-danger" style="font-weight: bold;">Cancle</a>
+        </div>
+      </div>
+      </div>
+    </form>
+</div>
+  <!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Upload Image</h4>
+        <span type="button" class="close" data-dismiss="modal">&times;</span>
+      </div>
+      <!-- //enctype="multipart/form-data" very important -->
+      <form id="upload_img" method="POST" enctype="multipart/form-data">
+          <!-- Modal body -->   
+          <div class="modal-body">
+              <div class="form-group">
+                  <label for="img">Image:</label>
+                  <!-- multiple neu input nhieu file -->
+                  <input type="file" class="form-control" id="img" name="img" multiple >
+                  <br>
+                  (NOTE: Image must .jpg .png, dung luong khong duoc > 100kb)
+            </div>
+            <div class="imgs">
+              <div class="img" id="show_img"></div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Upload</button>
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+            </div>
+      </form> 
+            
     </div>
   </div>
 </div>
 
   <script>
-
       //add button
       function addFunction(e) {
           document.getElementById(e).classList.toggle("show_add_btn");
       }
-
       $(document).ready(function(){
-        let a ='';
         $.ajax({
                   url: 'SHOW_IMG',
                   type: 'POST',
@@ -131,7 +125,27 @@
                 });
             return false;
         });
+        $('#add_category').on('submit', function(e){
+          let TYPE = $('#TYPE').val();
+          let Group = $('#Group').val();
+          let name = $('#name').val();
+          let price = $('#price').val();
+          let quantity = $('#quantity').val();
+          let describe = CKEDITOR.instances['content'].getSnapshot();
+          alert(TYPE +'  '+ Group+'  '+name+'  '+price+'  '+quantity+'  '+describe);
+          e.preventDefault();
+            // $.ajax({
+            //         url: 'add_category',
+            //         type: 'POST',
+            //         data: new FormData(this),// phai co this
 
+            //         success: function (result) {
+            //           $('#path').text(result.split("-")[1]);
+            //           $("#show_img").append( "<img src='public/uploads/uploads/"+result+"'>" );
+            //         }
+            //     });
+            // return false;
+        });
       })
   </script>
 

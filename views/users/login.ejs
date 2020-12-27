@@ -65,8 +65,11 @@
 				
                 success: function (result) {
 					alert(result);
-					$('#name_login').html(' Nguyễn Văn A');
-					window.location.href = '/'; //chuyen trang
+					if(result=="ok")
+					{
+						$('#name_login').html(localStorage.getItem('account'));
+						window.location.href = '/'; //chuyen trang
+					}	
                 }
             });
             return false;
