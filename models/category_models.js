@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 
  const CategorySchema = new Schema({
 
-        class:{
+        TYPE:{
             type: String,
             unique: true,
         },
-        group: {
+        Group: {
             type: String,
             unique: true,
         },

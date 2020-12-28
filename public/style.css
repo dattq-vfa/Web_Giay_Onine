@@ -161,6 +161,7 @@ img:hover{
       }
   }
 
+
   .dropdown-container {
     display: none;
     background-color: #262626;
@@ -182,6 +183,7 @@ img:hover{
     font-weight: bold;
     color: #FFC312;
   }
+
 
 /* mũi tên lên xuống tạo hiệu ứng */
   [data-toggle="collapse"]:after {
@@ -221,17 +223,20 @@ img:hover{
   align-items: center;
 }
 
-#myInput{
+.myInput{
   border: none;
   width: 120px;
   background-color:#262626;
   color: white;
 }
-#btn_add{
+.btn_add{
   padding: 2px 10px 2px 10px;
   border-radius: 5px !important;
 }
 
+label{
+  margin-bottom: 0px !important;
+}
 /* tạo button add  */
 
 #btn-search{

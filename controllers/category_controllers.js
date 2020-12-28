@@ -3,7 +3,7 @@ const router = express.Router();
 
 var fs = require('fs');
 //save path img
-var path = '';
+var path =[];
 //load multer
 const multer = require('multer');
 //cau hinh luu file
@@ -14,11 +14,6 @@ const storage = multer.diskStorage({
     },
     //kiem tra file
     filename: (req,file,cb)=>{
-        
-        //3 truong hop upload anh
-        //--1 : anh khong duoc trung ten :su dung Date.now()
-        //--2 : kiem tra đuôi ảnh (.jpg or png)
-        //--3 : dung lượng của tấm ảnh 
 
         if(file.mimetype != 'image/jpeg'&&file.mimetype != 'image/png')
         {
@@ -27,7 +22,7 @@ const storage = multer.diskStorage({
         else
         {
             cb(null, Date.now() + '-' + file.originalname);
-            path += Date.now() + '-' + file.originalname +' ';//them cho nay de lay ten file, hoac req.files de lay chi tiet tat ca file
+            path.push(Date.now() + '-' + file.originalname);
         }
     }
 });
@@ -44,9 +39,9 @@ router.post('/upload_file',(req,res)=>{
         }
     uploads(req, res, function(err){
         
-        if(path=='') 
+        if(path.length<1) 
         {
-            path='No choosed Image';
+            res.send('No choosed Image');
         }
         if(err instanceof multer.MulterError)
         {
@@ -60,7 +55,7 @@ router.post('/upload_file',(req,res)=>{
         {
             res.send(path);
         } 
-        path='';
+        path=[];
     });
 });
 router.post('/SHOW_IMG',(req,res)=>{
@@ -80,5 +75,33 @@ router.get('/list_categories',(req,res)=>{
     main = 'categories/list_category_product';
     res.render('index',{main:main});//gui du lieu khi su dung ejs
 });
+
+router.post('/add_category_product',(req,res)=>{
+    object = [
+        {
+            TYPE: req.body.TYPE,
+            Group: req.body.Group,
+            name: req.body.name,
+            price: req.body.price,
+            quantity: req.body.quantity,
+            image: req.body.image,
+            discription: req.body.describe,
+            address: address,
+            Role: [1,2],
+        }
+    ]
+    UserModel.create(object,(err,data)=>{
+        if(err)
+        {
+            console.log(err);
+            res.send('err');
+        }
+        else
+        {
+            console.log(data);
+            res.send('ok')
+        }
+    });
+})
 
 module.exports = router; //xuat ra du lieu de su dung

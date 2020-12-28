@@ -1,34 +1,36 @@
 <div class="main_content">
   <div class="container">
+    <div class="dropdown form-group">
+      <label for="TYPE" class="group" style="font-weight: bold;">Type: 
+        <select id="TYPE" name="TYPE" class="btn btn-primary">
+          <option value="Boy">Boy</option>
+          <option value="Girl">Girl</option>
+          <option value="Child">Child</option>
+          <option value="Other">Other</option>
+        </select>
+        <label onclick="addFunction('add_1Dropdown')" class="btn btn-outline-dark btn-circle" style="border: unset; color: white;"><i class="fa fa-plus"></i></label>
+        <div id="add_1Dropdown" class="dropdown-content">
+          <form id="add_type">
+            <input type="text" placeholder="Add Type..." class="myInput" id="in_type" required>
+            <button class="btn btn-primary btn_add">Add</button>
+          </form>
+        </div>
+      </label>
+      <label for="Group" class="group" style="font-weight: bold;">Group: 
+        <select id="Group" name="Group" class="btn btn-primary ">
+          <option value="Classic">Classic</option>
+          <option value="One Star">One Star</option>
+        </select>
+        <label onclick="addFunction('add_2Dropdown')"   href="#" class="btn btn-outline-dark btn-circle" style="border: unset; color: white;"><i class="fa fa-plus"></i></label>
+        <div id="add_2Dropdown" class="dropdown-content">
+          <form id="add_group">
+            <input type="text" placeholder="Add Group..." class="myInput" id="in_group" required>
+            <button class="btn btn-primary btn_add">Add</button>
+          </form>
+        </div>
+      </label>
+    </div>
     <form id="add_category">
-      <div class="dropdown form-group">
-        <label for="TYPE" class="group" style="font-weight: bold;">Type: 
-          <select id="TYPE" name="TYPE" class="btn btn-primary">
-            <option value="Boy">Boy</option>
-            <option value="Girl">Girl</option>
-            <option value="Child">Child</option>
-            <option value="Other">Other</option>
-          </select>
-          <button onclick="addFunction('add_1Dropdown')" class="btn btn-outline-dark btn-circle" style="border: unset; color: white;"><i class="fa fa-plus" aria-hidden="true"></i></button>
-          <div id="add_1Dropdown" class="dropdown-content">
-            <input type="text" placeholder="Add Type..." id="myInput">
-            <button class="btn btn-primary" id="btn_add" >Add</button>
-          </div>
-        </label>
-        
-        <label for="Group" class="group" style="font-weight: bold;">Group: 
-          <select id="Group" name="Group" class="btn btn-primary ">
-            <option value="Classic">Classic</option>
-            <option value="One Star">One Star</option>
-          </select>
-          <button onclick="addFunction('add_2Dropdown')"   href="#" class="btn btn-outline-dark btn-circle" style="border: unset; color: white;"><i class="fa fa-plus" aria-hidden="true"></i></button>
-          <div id="add_2Dropdown" class="dropdown-content">
-            <input type="text" placeholder="Add Group..." id="myInput">
-            <button class="btn btn-primary" id="btn_add" >Add</button>
-          </div>
-        </label>
-        
-      </div>
       <div class="form-input">
           <div class="form-group">
               <input class="form-control" id="name" name="name" placeholder="Name Product..." type="text" required>
@@ -40,8 +42,11 @@
                 <input class="form-control" id="quantity" name="quantity" placeholder="Quantity..." type="text" required>
             </div>
       </div>
-      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-image" style="font-size:24px"></i> Upload image</button>
-      <span id="path"></span>
+      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal"><i class="fa fa-image" style="font-size:24px"></i> Upload Avatar image</button>
+      <span id="avatar_img" style="color: white;"></span> 
+      <br><br>
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-image" style="font-size:24px"></i> Upload Items image</button>
+      <span id="items_img" style="color: white;"></span>
       <br>
       <label for="content"  class="color_text">Describe:</label>
       <textarea  class="form-group" name="content" id="content" placeholder="Describe" ></textarea>
@@ -96,6 +101,13 @@
           document.getElementById(e).classList.toggle("show_add_btn");
       }
       $(document).ready(function(){
+        $('#add_type').on('submit', function(e){
+          e.preventDefault();
+          $('#TYPE').append($('<option>', {
+            value: $('#in_type').val(),
+            text: $('#in_type').val()
+          }));
+        });
         $.ajax({
                   url: 'SHOW_IMG',
                   type: 'POST',
@@ -119,8 +131,10 @@
                     contentType: false,
 
                     success: function (result) {
-                      $('#path').text(result.split("-")[1]);
-                      $("#show_img").append( "<img src='public/uploads/uploads/"+result+"'>" );
+                      let path='';
+                      result.forEach(i => path += i.split("-")[1] +', ');
+                      $('#avatar_img').text(path);
+                      // $("#show_img").append( "<img src='public/uploads/uploads/"+result+"'>" );
                     }
                 });
             return false;
@@ -131,20 +145,19 @@
           let name = $('#name').val();
           let price = $('#price').val();
           let quantity = $('#quantity').val();
-          let describe = CKEDITOR.instances['content'].getSnapshot();
-          alert(TYPE +'  '+ Group+'  '+name+'  '+price+'  '+quantity+'  '+describe);
+          let describe = CKEDITOR.instances.content.document.getBody().getText(); //lấy text trong ckeditor chỉ cần thêm .document.getBody().getText() thay vì getdata()
+          // alert(TYPE +'  '+ Group+'  '+name+'  '+price+'  '+quantity+'  '+describe);
           e.preventDefault();
-            // $.ajax({
-            //         url: 'add_category',
-            //         type: 'POST',
-            //         data: new FormData(this),// phai co this
+            $.ajax({
+                    url: 'add_category_product',
+                    type: 'POST',
+                    data: {'TYPE':TYPE, 'Group':Group, 'name':name, 'price':price, 'quantity':quantity, 'describe':describe},
 
-            //         success: function (result) {
-            //           $('#path').text(result.split("-")[1]);
-            //           $("#show_img").append( "<img src='public/uploads/uploads/"+result+"'>" );
-            //         }
-            //     });
-            // return false;
+                    success: function (result) {
+                      alert(result);
+                    }
+                });
+            return false;
         });
       })
   </script>
