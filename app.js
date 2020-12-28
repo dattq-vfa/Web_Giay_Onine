@@ -34,4 +34,4 @@ const index_controllers = require('./controllers/index_controllers.js');
 app.use('/',index_controllers);
 
 
-app.listen(process.env.PORT,()=>{console.log('on server')})
+app.listen(3000,()=>{console.log('on server')})
