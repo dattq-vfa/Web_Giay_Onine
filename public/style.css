@@ -134,8 +134,11 @@ img:hover{
         background-attachment: unset !important;
       }
 
-      .main{
+      /* .main{
         overflow-x: scroll;
+      } */
+      .main .main_contain #table_category{
+        overflow-x: scroll !important;
       }
       .sidebar {
         width: 100%;

@@ -43,11 +43,9 @@
             </div>
       </div>
       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal"><i class="fa fa-image" style="font-size:24px"></i> Upload Avatar image</button>
-      <span id="avatar_img" style="color: white;"></span> 
-      <br><br>
-      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-image" style="font-size:24px"></i> Upload Items image</button>
-      <span id="items_img" style="color: white;"></span>
-      <br>
+      <div id="avatar_img" style="color: white; padding: 10px 0px;"></div> 
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal1"><i class="fa fa-image" style="font-size:24px"></i> Upload Items image</button>
+      <div id="items_img" style="color: white; padding: 10px 0px;"></div>
       <label for="content"  class="color_text">Describe:</label>
       <textarea  class="form-group" name="content" id="content" placeholder="Describe" ></textarea>
       <div class="row">
@@ -63,7 +61,6 @@
 <div class="modal" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
-    
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Upload Image</h4>
@@ -73,24 +70,55 @@
       <form id="upload_img" method="POST" enctype="multipart/form-data">
           <!-- Modal body -->   
           <div class="modal-body">
-              <div class="form-group">
-                  <label for="img">Image:</label>
-                  <!-- multiple neu input nhieu file -->
-                  <input type="file" class="form-control" id="img" name="img" multiple >
-                  <br>
-                  (NOTE: Image must .jpg .png, dung luong khong duoc > 100kb)
+            <div class="form-group">
+              <label for="img">Image:</label>
+              <!-- multiple neu input nhieu file -->
+              <input type="file" class="form-control" id="img" name="img" multiple>
+              <br>
+              (NOTE: Image must .jpg .png, dung luong khong duoc > 100kb)
             </div>
             <div class="imgs">
               <div class="img" id="show_img"></div>
             </div>
-
             <!-- Modal footer -->
             <div class="modal-footer">
               <button type="submit" class="btn btn-success">Upload</button>
               <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
             </div>
+          </div>
       </form> 
-            
+    </div>
+  </div>
+</div>
+<div class="modal" id="myModal1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Upload Image</h4>
+        <span type="button" class="close" data-dismiss="modal">&times;</span>
+      </div>
+      <!-- //enctype="multipart/form-data" very important -->
+      <form id="upload_img1" method="POST" enctype="multipart/form-data">
+          <!-- Modal body -->   
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="img">Image:</label>
+              <!-- multiple neu input nhieu file -->
+              <input type="file" class="form-control" id="img" name="img" multiple >
+              <br>
+              (NOTE: Image must .jpg .png, dung luong khong duoc > 100kb)
+            </div>
+            <div class="imgs">
+              <div class="img" id="show_img"></div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Upload</button>
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+      </form>  
     </div>
   </div>
 </div>
@@ -118,31 +146,72 @@
                     });  
                   }
                 });
+
         $('#upload_img').on('submit', function(e){
-            e.preventDefault();
-            $.ajax({
-                    url: 'upload_file',
-                    type: 'POST',
-                    data: new FormData(this),// phai co this
+          e.preventDefault();
 
-                    // cài đặt 3 cái cần để upload file
-                    cache: false,
-                    processData: false,
-                    contentType: false,
+          console.log($('#img').val());
+          console.log(document.getElementById('img').files);
 
-                    success: function (result) {
-                      let path='';
-                      result.forEach(i => path += i.split("-")[1] +', ');
-                      $('#avatar_img').text(path);
-                      // $("#show_img").append( "<img src='public/uploads/uploads/"+result+"'>" );
-                    }
-                });
-            return false;
-        });
+            // e.preventDefault();
+            // $.ajax({
+            //         url: 'upload_file',
+            //         type: 'POST',
+            //         data: new FormData(this),// phai co this
+            //         // cài đặt 3 cái cần để upload file
+            //         cache: false,
+            //         processData: false,
+            //         contentType: false,
+            //         success: function (result) {
+            //           $('#avatar_img').html("<img src='public/uploads/uploads/"+result+"'>");
+            //         }
+            //     });
+            // return false;
+        });      
+        // $('#upload_img').on('submit', function(e){
+        //     e.preventDefault();
+        //     $.ajax({
+        //             url: 'upload_file',
+        //             type: 'POST',
+        //             data: new FormData(this),// phai co this
+        //             // cài đặt 3 cái cần để upload file
+        //             cache: false,
+        //             processData: false,
+        //             contentType: false,
+        //             success: function (result) {
+        //               $('#avatar_img').html("<img src='public/uploads/uploads/"+result+"'>");
+        //             }
+        //         });
+        //     return false;
+        // });
+
+        // $('#upload_img1').on('submit', function(e){
+        //     e.preventDefault();
+        //     $.ajax({
+        //             url: 'upload_sub_file',
+        //             type: 'POST',
+        //             data: new FormData(this),// phai co this
+        //             async:false,
+        //             // cài đặt 3 cái cần để upload file
+        //             cache: false,
+        //             processData: false,
+        //             contentType: false,
+
+        //             success: function (result) {
+        //               result.forEach((i) => {
+        //                   $("#items_img").append( "<img src='public/uploads/uploads/"+i+"'>" );
+        //                 }
+        //               );
+        //             }
+        //         });
+        //     return false;
+        // });
+
         $('#add_category').on('submit', function(e){
           let TYPE = $('#TYPE').val();
           let Group = $('#Group').val();
           let name = $('#name').val();
+          let img = $('#avatar_img').text();
           let price = $('#price').val();
           let quantity = $('#quantity').val();
           let describe = CKEDITOR.instances.content.document.getBody().getText(); //lấy text trong ckeditor chỉ cần thêm .document.getBody().getText() thay vì getdata()
@@ -151,7 +220,7 @@
             $.ajax({
                     url: 'add_category_product',
                     type: 'POST',
-                    data: {'TYPE':TYPE, 'Group':Group, 'name':name, 'price':price, 'quantity':quantity, 'describe':describe},
+                    data: {'TYPE':TYPE, 'Group':Group, 'name':name, 'img':img, 'price':price, 'quantity':quantity, 'describe':describe},
 
                     success: function (result) {
                       alert(result);

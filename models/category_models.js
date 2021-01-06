@@ -18,7 +18,7 @@ const Schema = mongoose.Schema;
         },
         img: String,
         imgs : Array,
-        price: Int16Array,
+        price: Number,
         discription: String,
         link:{
             type: String,
