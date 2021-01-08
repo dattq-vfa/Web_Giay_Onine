@@ -3,9 +3,6 @@ const router = express.Router();
 
 const CategoryModel = require('../models/category_models');
 var fs = require('fs');
-//save path img
-var path ='';
-var path_img_item=[];
 //load multer
 const multer = require('multer');
 //cau hinh luu file
@@ -16,104 +13,60 @@ const storage = multer.diskStorage({
     },
     //kiem tra file
     filename: (req,file,cb)=>{
-
         if(file.mimetype != 'image/jpeg'&&file.mimetype != 'image/png')
         {
             return cb('File khong dung dinh dang');
         }
         else
         {
-            let path_img ='avatar' + '-' + Date.now() + '-' + file.originalname;
-            cb(null, path_img);
-            path=path_img;
-        }
-    }
-});
-
-const storage_item = multer.diskStorage({
-    //duong dan luu file
-    destination: (req,file,cb)=>{
-        cb(null,'public/uploads/uploads');
-    },
-    //kiem tra file
-    filename: (req,file,cb)=>{
-
-        if(file.mimetype != 'image/jpeg'&&file.mimetype != 'image/png')
-        {
-            return cb('File khong dung dinh dang');
-        }
-        else
-        {
-            let path_items = 'item' + '-' + Date.now() + '-' + file.originalname;
-            cb(null, path_items);
-            path_img_item.push(path_items);
+            console.log(req.files.fieldname);
+            if(req.files.fieldname == 'img')
+            {
+                let path_img ='avatar' + '-' + Date.now() + '-' + file.originalname;
+                cb(null, path_img);
+            }
+            else
+            {
+                let path_img ='item' + '-' + Date.now() + '-' + file.originalname;
+                cb(null, path_img);
+            }
         }
     }
 });
 
 var limits = {fileSize: 10240*50000}; // hieu la 200kb
 // Gọi ra sử dụng
-const upload = multer ({storage: storage, limits: limits}).single('img');
-const uploads = multer ({storage: storage_item, limits: limits}).array('img');//array neu iput nhieu file, con 1 file thi single
-router.post('/upload_file',(req,res)=>{
+var upload = multer ({storage: storage, limits: limits});
 
-    //tạo folder save img upload
+router.post('/upload_file',upload.any(),(req,res)=>{
     if (!fs.existsSync('./public/uploads'))
-        {
-            fs.mkdirSync('./public/uploads');
-            fs.mkdirSync('./public/uploads/uploads');
-        }
-    upload(req, res, function(err){
-        
-        if(path =='') 
-        {
-            res.send('No choosed Image');
-        }
-        if(err instanceof multer.MulterError)
-        {
-           res.send("File quá lớn"); 
-        }
-        else if(err) 
-        {
-            res.send(err);
-        }
-        else
-        {
-            res.send(path);
-        } 
-        path='';
-    });
+    {
+        fs.mkdirSync('./public/uploads');
+        fs.mkdirSync('./public/uploads/uploads');
+    }
+    // console.log(req.files);
+    // upload(req, res, function(err){
+    //     console.log(req.file, req.body);
+    //     if(path =='') 
+    //     {
+    //         res.send('No choosed Image');
+    //     }
+    //     if(err instanceof multer.MulterError)
+    //     {
+    //        res.send("File quá lớn"); 
+    //     }
+    //     else if(err) 
+    //     {
+    //         res.send(err);
+    //     }
+    //     else
+    //     {
+    //         res.send(path);
+    //     } 
+    //     path='';
+    // });
 });
 
-router.post('/upload_sub_file',(req,res)=>{
-
-    //tạo folder save img upload
-    if (!fs.existsSync('./public/uploads'))
-        {
-            fs.mkdirSync('./public/uploads');
-            fs.mkdirSync('./public/uploads/uploads');
-        }
-    uploads(req, res, function(err){
-        
-        if(path_img_item.length<1) 
-        {
-            res.send('No choosed Image');
-        }
-        if(err instanceof multer.MulterError)
-        {
-           res.send("File quá lớn"); 
-        }
-        else if(err) 
-        {
-            res.send(err);
-        }
-        else
-        {
-            res.send(path_img_item);
-        } 
-        path_img_item=[];
-    });
-});
 
 router.post('/SHOW_IMG',(req,res)=>{
     let c =[];

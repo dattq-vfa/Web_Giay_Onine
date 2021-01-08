@@ -1,9 +1,10 @@
 <div class="main_content">
   <div class="row" style="padding-bottom: 10px;">
-    <div class="col-md-3">
+    <div class="col-md-5">
             <a href="user/member/list_delete" class="btn btn-warning"><i class="fa fa-trash-o" style="font-size:24px"></i> List deleted</a>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" style="font-size:20px"></i> Add Category</button>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-7">
         <form class="form-inline justify-content-end" id="btn_search">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" id="text_search">
             <button class="btn btn-success" type="submit">Search</button>
@@ -76,3 +77,95 @@
     <li class="page-item"><a class="page-link" href="#">Next</a></li>
   </ul>
 </div>
+
+<!------------------------------ The Modal --------------------------------->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Product</h4>
+        <span type="button" class="close" data-dismiss="modal">&times;</span>
+      </div>
+      <!-- //enctype="multipart/form-data" very important -->
+      <form id="upload_img" method="POST" enctype="multipart/form-data">
+          <!-- Modal body -->   
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="dropdown form-group">
+                <label for="TYPE" class="group" style="font-weight: bold;">Type: 
+                  <select id="TYPE" name="TYPE" class="btn btn-primary">
+                    <option value="Boy">Boy</option>
+                    <option value="Girl">Girl</option>
+                    <option value="Child">Child</option>
+                    <option value="Other">Other</option>
+                  </select>
+                <label>
+                <label for="Group" class="group" style="font-weight: bold; padding-left: 10px;">Group: 
+                  <select id="Group" name="Group" class="btn btn-primary ">
+                    <option value="Classic">Classic</option>
+                    <option value="One Star">One Star</option>
+                  </select>
+                </label>
+              </div>
+              
+              <b>Name Product:</b>
+              <input class="form-control" id="name" name="name" placeholder="Name Product..." type="text" required>
+              <b>Price:</b>
+              <input class="form-control" id="price" name="price" placeholder="Price..." type="text" required>
+              <b>Quantity:</b>
+              <input class="form-control" id="quantity" name="quantity" placeholder="Quantity..." type="text" required>
+              <b>Avatar Image:</b> (Format: .jpg .png)
+              <input type="file" class="form-control" id="img" name="img">
+              <b>Items Image:</b> (Format: .jpg .png)
+              <!-- multiple neu input nhieu file -->
+              <input type="file" class="form-control" id="imgs" name="imgs" multiple>
+              <b>Describe:</b>
+              <textarea  class="form-group" name="content" id="content" placeholder="Describe" ></textarea>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Upload</button>
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+      </form> 
+    </div>
+  </div>
+</div>
+<!-------------------------------------- The Modal -------------------------------------------------->
+<script src="/public/ckeditor/ckeditor.js"></script>
+<script>CKEDITOR.replace('content');</script>
+
+<script>
+
+    function addFunction(e) {
+      document.getElementById(e).classList.toggle("show_add_btn");
+    }
+
+    $(document).ready(function(){
+      $('#upload_img').on('submit', function(e){
+        e.preventDefault();
+        let TYPE = $('#TYPE').val();
+        let Group = $('#Group').val();
+        let name = $('#name').val();
+        // let img = $('#avatar_img').text();
+        let price = $('#price').val();
+        let quantity = $('#quantity').val();
+        // console.log(TYPE+' '+Group +' '+ name+' '+price+' '+quantity);
+        $.ajax({
+                url: 'upload_file',
+                type: 'POST',
+                data: new FormData(this),// phai co this
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                  alert(result);
+                }
+            });
+        return false;
+        });  
+    });
+
+</script>
