@@ -116,10 +116,10 @@
               <b>Quantity:</b>
               <input class="form-control" id="quantity" name="quantity" placeholder="Quantity..." type="text" required>
               <b>Avatar Image:</b> (Format: .jpg .png)
-              <input type="file" class="form-control" id="img" name="img">
+              <input type="file" class="form-control" id="img" name="img" accept=".jpg,.png" >
               <b>Items Image:</b> (Format: .jpg .png)
               <!-- multiple neu input nhieu file -->
-              <input type="file" class="form-control" id="imgs" name="imgs" multiple>
+              <input type="file" class="form-control" id="imgs" name="imgs"  accept=".jpg,.png" multiple>
               <b>Describe:</b>
               <textarea  class="form-group" name="content" id="content" placeholder="Describe" ></textarea>
             </div>
@@ -160,8 +160,11 @@
                 cache: false,
                 processData: false,
                 contentType: false,
+                error: function(xhr) {
+                console.log('Error: ' + xhr.status);
+                },
                 success: function (result) {
-                  alert("ok");
+                  alert(result);
                 }
             });
         return false;

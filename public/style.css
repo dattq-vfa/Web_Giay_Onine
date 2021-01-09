@@ -73,9 +73,6 @@ option{
     color: white;
 }
 
-img:hover{
-    background-color: red;
-  }
   img{
     padding: 4px;
     width: 85px;

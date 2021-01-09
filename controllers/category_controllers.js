@@ -4,6 +4,7 @@ const router = express.Router();
 //load multer
 const multer = require('multer');
 const CategoryModel = require('../models/category_models');
+let path=[];
 //cau hinh luu file
 const storage = multer.diskStorage({
     //duong dan luu file
@@ -23,40 +24,45 @@ const storage = multer.diskStorage({
             {
                 let path_img ='avatar' + '-' + Date.now() + '-' + file.originalname;
                 cb(null, path_img);
+                path.push(path_img);
             }
             else
             {
                 let path_img ='item' + '-' + Date.now() + '-' + file.originalname;
                 cb(null, path_img);
+                path.push(path_img);
             }
         }
     }
 });
 
-var limits = {fileSize: 10240*50000}; // hieu la 200kb
+var limits = {fileSize: 1024*50}; // hieu la 200kb
 // Gọi ra sử dụng
-var upload = multer({storage: storage ,limits: limits});
+var upload = multer({storage: storage, limits: limits });
 
-router.post('/upload_file',upload.any(),(req,res)=>{
-    // upload(req, res, function(err){
-    //     console.log(req.file, req.body);
-    //     if(1 =='') 
-    //     {
-    //         res.send('No choosed Image');
-    //     }
-    //     if(err instanceof multer.MulterError)
-    //     {
-    //        res.send("File quá lớn"); 
-    //     }
-    //     else if(err) 
-    //     {
-    //         res.send(err);
-    //     }
-    //     else
-    //     {
-    //         res.send(1);
-    //     } 
-    // });
+router.post('/upload_file',(req,res)=>{
+    let tmp='';
+    // upload image and handle err
+    upload.any()(req, res, function(err){
+        if(path.length < 1) 
+        {
+            tmp = 'No choosed Image';
+        }
+        else if(err instanceof multer.MulterError)
+        {
+            (err.field == "img") ? tmp = "File Avatar quá lớn": tmp = "File Items quá lớn"
+        }
+        else if(err) 
+        {
+            tmp = err;
+        }
+        else
+        {
+            tmp = "ok";
+        } 
+        res.send(tmp);
+        path =[];
+    });
 });
 
 
