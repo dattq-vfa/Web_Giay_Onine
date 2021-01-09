@@ -121,7 +121,7 @@
               <!-- multiple neu input nhieu file -->
               <input type="file" class="form-control" id="imgs" name="imgs"  accept=".jpg,.png" multiple>
               <b>Describe:</b>
-              <textarea  class="form-group" name="content" id="content" placeholder="Describe" ></textarea>
+              <textarea  class="form-group" name="content" id="content"></textarea>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
@@ -146,26 +146,25 @@
     $(document).ready(function(){
       $('#upload_img').on('submit', function(e){
         e.preventDefault();
-        let TYPE = $('#TYPE').val();
-        let Group = $('#Group').val();
-        let name = $('#name').val();
-        // let img = $('#avatar_img').text();
-        let price = $('#price').val();
-        let quantity = $('#quantity').val();
-        // console.log(TYPE+' '+Group +' '+ name+' '+price+' '+quantity);
+        let tmp = ['#name','#price','#quantity','#img','#imgs'];
+        var data = new FormData(this);
+        data.append('content', CKEDITOR.instances['content'].getData());
         $.ajax({
                 url: 'upload_file',
                 type: 'POST',
-                data: new FormData(this),// phai co this
+                data: data,
                 cache: false,
                 processData: false,
                 contentType: false,
-                error: function(xhr) {
-                console.log('Error: ' + xhr.status);
-                },
                 success: function (result) {
                   alert(result);
-                  $('#TYPE').empty();
+                  if(result=="ok")
+                  {
+                    tmp.forEach( i => {
+                      $(i).val('');
+                    });
+                    CKEDITOR.instances['content'].setData('');
+                  }
                 }
             });
         return false;

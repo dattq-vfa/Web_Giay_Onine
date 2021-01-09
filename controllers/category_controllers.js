@@ -44,6 +44,7 @@ router.post('/upload_file',(req,res)=>{
     let tmp='';
     // upload image and handle err
     upload.any()(req, res, function(err){
+        console.log(req.body);
         if(path.length < 1) 
         {
             tmp = 'No choosed Image';
@@ -61,7 +62,6 @@ router.post('/upload_file',(req,res)=>{
             if(path.indexOf("avatar") == -1) tmp = "No choosed Image Avatar";
             else if(path.indexOf("items") == -1) tmp = "No choosed Image Items";
             else tmp = "ok";
-            console.log(req.files);
         } 
         res.send(tmp);
         path =[];
