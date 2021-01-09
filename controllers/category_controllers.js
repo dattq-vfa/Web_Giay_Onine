@@ -22,21 +22,21 @@ const storage = multer.diskStorage({
             // file.fieldname +  upload.any() để lấy tên file hình
             if(file.fieldname == 'img')
             {
-                let path_img ='avatar' + '-' + Date.now() + '-' + file.originalname;
+                let path_img ='avatar'+ '-' +  req.body.name + '-' + Date.now() + '-' + file.originalname;
                 cb(null, path_img);
-                path.push(path_img);
+                path.push("avatar");
             }
             else
             {
-                let path_img ='item' + '-' + Date.now() + '-' + file.originalname;
+                let path_img ='item'+ '-' + req.body.name + '-' + Date.now() + '-' + file.originalname;
                 cb(null, path_img);
-                path.push(path_img);
+                path.push("items");
             }
         }
     }
 });
 
-var limits = {fileSize: 1024*50}; // hieu la 200kb
+var limits = {fileSize: 1024*5000}; // hieu la 200kb
 // Gọi ra sử dụng
 var upload = multer({storage: storage, limits: limits });
 
@@ -58,7 +58,10 @@ router.post('/upload_file',(req,res)=>{
         }
         else
         {
-            tmp = "ok";
+            if(path.indexOf("avatar") == -1) tmp = "No choosed Image Avatar";
+            else if(path.indexOf("items") == -1) tmp = "No choosed Image Items";
+            else tmp = "ok";
+            console.log(req.files);
         } 
         res.send(tmp);
         path =[];
