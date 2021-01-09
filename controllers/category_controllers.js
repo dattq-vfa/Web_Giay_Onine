@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const CategoryModel = require('../models/category_models');
-var fs = require('fs');
 //load multer
 const multer = require('multer');
+const CategoryModel = require('../models/category_models');
 //cau hinh luu file
 const storage = multer.diskStorage({
     //duong dan luu file
@@ -19,8 +18,8 @@ const storage = multer.diskStorage({
         }
         else
         {
-            console.log(req.files.fieldname);
-            if(req.files.fieldname == 'img')
+            // file.fieldname +  upload.any() để lấy tên file hình
+            if(file.fieldname == 'img')
             {
                 let path_img ='avatar' + '-' + Date.now() + '-' + file.originalname;
                 cb(null, path_img);
@@ -36,18 +35,12 @@ const storage = multer.diskStorage({
 
 var limits = {fileSize: 10240*50000}; // hieu la 200kb
 // Gọi ra sử dụng
-var upload = multer ({storage: storage, limits: limits});
+var upload = multer({storage: storage ,limits: limits});
 
 router.post('/upload_file',upload.any(),(req,res)=>{
-    if (!fs.existsSync('./public/uploads'))
-    {
-        fs.mkdirSync('./public/uploads');
-        fs.mkdirSync('./public/uploads/uploads');
-    }
-    // console.log(req.files);
     // upload(req, res, function(err){
     //     console.log(req.file, req.body);
-    //     if(path =='') 
+    //     if(1 =='') 
     //     {
     //         res.send('No choosed Image');
     //     }
@@ -61,9 +54,8 @@ router.post('/upload_file',upload.any(),(req,res)=>{
     //     }
     //     else
     //     {
-    //         res.send(path);
+    //         res.send(1);
     //     } 
-    //     path='';
     // });
 });
 
