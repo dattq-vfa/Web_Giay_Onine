@@ -97,7 +97,7 @@ router.post('/upload_file',(req,res)=>{
                             name: req.body.name,
                             price: req.body.price,
                             quantity: req.body.quantity,
-                            discription: req.body.content,
+                            description: req.body.content,
                             img: link_avatar,
                             imgs: link_items,
                             id_category: localStorage.getItem('id_user')
@@ -141,43 +141,72 @@ router.get('/add_categories',(req,res)=>{
 router.get('/list_categories',(req,res)=>{
     main = 'categories/list_category_product';
     CategoryModel.find({status: false })
-        .exec((err,data)=>{
-                if(err)
-                {
-                    console.log(err);
-                }
-                else
-                {
-                    console.log(data);
-                }
-        });
-    res.render('index',{main:main});//gui du lieu khi su dung ejs
-});
-
-router.post('/add_category_product',(req,res)=>{
-    object = [
-        {
-            TYPE: req.body.TYPE,
-            Group: req.body.Group,
-            name: req.body.name,
-            price: req.body.price,
-            quantity: req.body.quantity,
-            img: req.body.img,
-            discription: req.body.describe,
-        }
-    ]
-    CategoryModel.create(object,(err,data)=>{
+    .exec((err,data)=>{
         if(err)
         {
             console.log(err);
-            res.send('err');
         }
         else
         {
-            console.log(data);
-            res.send('ok')
+            str ='';
+            data.forEach((v)=>{
+                str += `<tbody id="`+v._id+`">
+                            <tr>
+                            <td>`+v.name+`</td>
+                            <td>`+v.TYPE+`</td>
+                            <td>`+v.Group+`</td>
+                            <td>`+v.img+`</td>
+                            <td>`+v.price+`</td>
+                            <td>`+v.quantity+`</td>
+                            <td>`+v.description[1]+`</td>
+                            <td>
+                                <button  class="btn btn-info btn-adjust">Sửa</button>
+                                <button type="button" class="btn btn-outline-danger btn-adjust" data-toggle="modal" data-target="#myModal`+v._id+`">Xóa</button>
+                            </td>
+                            </tr>
+                        </tbody>`
+                str += `<div class="modal" id="myModal`+v._id+`">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Thông báo</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        Bạn có muốn xóa `+v.name+` không?
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="delete_data('`+v._id+`')">Xóa ngay</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Thoát</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+            });
+            res.render('index',{main:main,str:str});//gui du lieu khi su dung ejs
         }
     });
+});
+
+router.get('/list_categories/edit/:id',(req,res)=>{
+    console.log(req.params.id);
+    // link = '/user'
+    // main = 'users/edit';
+    CategoryModel.find({_id : req.params.id})
+    .exec((err,data)=>{
+        console.log(data[0]);
+        // res.render('index',{main: main,data: data[0]});
+
+    });
 })
+
+// router.get('/Add_Category',(req,res)=>{
+//     main = 'categories/edit_category_product';
+//     res.render('index',{main:main});
+// })
+
 
 module.exports = router; //xuat ra du lieu de su dung

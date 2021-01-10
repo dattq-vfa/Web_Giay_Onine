@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="d-flex justify-content-center" style="padding: 20px 0px;">
+        <form id="upload_img" method="POST" enctype="multipart/form-data">  
+            <div class="form-group">
+                <div class="dropdown form-group">
+                    <label for="TYPE" class="group" style="font-weight: bold;">Type: 
+                    <select id="TYPE" name="TYPE" class="btn btn-primary">
+                        <option value="Boy">Boy</option>
+                        <option value="Girl">Girl</option>
+                        <option value="Child">Child</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <label>
+                    <label for="Group" class="group" style="font-weight: bold; padding-left: 10px;">Group: 
+                    <select id="Group" name="Group" class="btn btn-primary ">
+                        <option value="Classic">Classic</option>
+                        <option value="One Star">One Star</option>
+                    </select>
+                    </label>
+                </div>
+                <b>Name Product:</b>
+                <input class="form-control" id="name" name="name" placeholder="Name Product..." type="text" required>
+                <b>Price:</b>
+                <input class="form-control" id="price" name="price" placeholder="Price..." type="number" required>
+                <b>Quantity:</b>
+                <input class="form-control" id="quantity" name="quantity" placeholder="Quantity..." type="number" required>
+                <b>Avatar Image:</b> (Format: .jpg .png)
+                <input type="file" class="form-control" id="img" name="img" accept=".jpg,.png" >
+                <b>Items Image:</b> (Format: .jpg .png)
+                <input type="file" class="form-control" id="imgs" name="imgs"  accept=".jpg,.png" multiple>
+                <b>Describe:</b>
+                <textarea  class="form-group" name="content" id="content"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Upload</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </form> 
+    </div>
+</div>
+
+<script src="/public/ckeditor/ckeditor.js"></script>
+<script>CKEDITOR.replace('content');</script>
+  
