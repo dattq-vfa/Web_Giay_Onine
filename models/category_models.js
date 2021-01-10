@@ -3,15 +3,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
  const CategorySchema = new Schema({
-
-        TYPE:{
-            type: String,
-            unique: true,
-        },
-        Group: {
-            type: String,
-            unique: true,
-        },
+        TYPE: String,
+        Group: String,
         name:{
             type: String,
             unique: true,
@@ -19,12 +12,9 @@ const Schema = mongoose.Schema;
         img: String,
         imgs : Array,
         price: Number,
-        discription: String,
-        link:{
-            type: String,
-            unique: true,
-        },
-        id_user: mongoose.Schema.Types.ObjectId,
+        quantity: Number,
+        discription: Array,
+        id_category: mongoose.Schema.Types.ObjectId,
         status: {
             type: Boolean,
             default: false

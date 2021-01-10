@@ -112,9 +112,9 @@
               <b>Name Product:</b>
               <input class="form-control" id="name" name="name" placeholder="Name Product..." type="text" required>
               <b>Price:</b>
-              <input class="form-control" id="price" name="price" placeholder="Price..." type="text" required>
+              <input class="form-control" id="price" name="price" placeholder="Price..." type="number" required>
               <b>Quantity:</b>
-              <input class="form-control" id="quantity" name="quantity" placeholder="Quantity..." type="text" required>
+              <input class="form-control" id="quantity" name="quantity" placeholder="Quantity..." type="number" required>
               <b>Avatar Image:</b> (Format: .jpg .png)
               <input type="file" class="form-control" id="img" name="img" accept=".jpg,.png" >
               <b>Items Image:</b> (Format: .jpg .png)
@@ -146,7 +146,7 @@
     $(document).ready(function(){
       $('#upload_img').on('submit', function(e){
         e.preventDefault();
-        let tmp = ['#name','#price','#quantity','#img','#imgs'];
+        let reset_in = ['#name','#price','#quantity','#img','#imgs'];
         var data = new FormData(this);
         data.append('content', CKEDITOR.instances['content'].getData());
         $.ajax({
@@ -160,7 +160,7 @@
                   alert(result);
                   if(result=="ok")
                   {
-                    tmp.forEach( i => {
+                    reset_in.forEach( i => {
                       $(i).val('');
                     });
                     CKEDITOR.instances['content'].setData('');

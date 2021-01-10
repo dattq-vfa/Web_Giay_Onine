@@ -149,6 +149,7 @@ router.post('/Login_user',(req,res)=>{
                             {
                                 localStorage.setItem('token',token);
                                 localStorage.setItem('account',(data[0].name).toUpperCase());
+                                localStorage.setItem('id_user',data[0]._id);
                                 res.send('ok');
                             }
                         });
@@ -165,6 +166,7 @@ router.post('/Login_user',(req,res)=>{
 router.get('/logout',(req,res)=>{
     localStorage.removeItem('token');
     localStorage.removeItem('account');
+    localStorage.removeItem('id_user');
     main = 'partials/main_home';
     res.render('index',{main:main});//gui du lieu khi su dung ejs
 });
