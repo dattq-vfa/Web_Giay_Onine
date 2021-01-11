@@ -29,7 +29,6 @@
     <%- str%>
   </tbody>
 </table>
-
   <ul class="pagination justify-content-end">
     <li class="page-item active"><a class="page-link" href="#">Previous</a></li>
     <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -133,10 +132,12 @@
               <input class="form-control" id="e_quantity" name="quantity" placeholder="Quantity..." type="number" required>
               <b>Avatar Image:</b> (Format: .jpg .png)
               <input type="file" class="form-control" id="e_img" name="img" accept=".jpg,.png" >
-              <b>Items Image:</b> (Format: .jpg .png)
+              <span id="show_img"></span>
+              <div><b>Items Image:</b> (Format: .jpg .png)</div>
               <!-- multiple neu input nhieu file -->
               <input type="file" class="form-control" id="e_imgs" name="imgs"  accept=".jpg,.png" multiple>
-              <b>Describe:</b>
+              <span id="show_imgs"></span>
+              <div><b>Describe:</b></div>
               <textarea  class="form-group" name="content" id="contents"></textarea>
             </div>
             <!-- Modal footer -->
@@ -232,14 +233,45 @@
         return false;
       }); 
       
+      $('#e_upload_img').on('submit', function(e){
+        e.preventDefault();
+        console.log("ok");
+        // let data = new FormData(this);
+        // data.append('content', CKEDITOR.instances['content'].getData());
+        // $.ajax({
+        //         url: 'upload_file',
+        //         type: 'POST',
+        //         data: data,
+        //         cache: false,
+        //         processData: false,
+        //         contentType: false,
+        //         success: function (result) {
+        //           alert(result);
+        //           if(result=="ok")
+        //           {
+        //             $("#upload_img").trigger("reset");//reset form
+        //             CKEDITOR.instances['content'].setData('');
+        //           }
+        //         }
+        // });
+        // return false;
+      }); 
+
       $('.edit_product').on('click', function(e){
         e.preventDefault();
+        $('#show_imgs').html('');
+        $('#e_img').val('');
+        $('#e_imgs').val('');
         let e_product = $.parseJSON($.trim($(this).find('span').text()));
         $('#e_TYPE').val(e_product.TYPE);
         $('#e_Group').val(e_product.Group);
         $('#e_name').val(e_product.name);
         $('#e_price').val(e_product.price);
         $('#e_quantity').val(e_product.quantity);
+        $('#show_img').html(`<img src="/public/uploads/uploads/`+e_product.img+`" alt="`+e_product.img+`" style='border: 2px solid black;'>`);
+        e_product.imgs.forEach(element => {
+          $('#show_imgs').append(`<img src="/public/uploads/uploads/`+element+`" alt="`+element+`"style='border: 2px solid black;'>`);
+        });
         CKEDITOR.instances['contents'].setData($.parseJSON($.trim($(this).find('span').html())).description);//get html for ckedditor
         $("#myModaledit").modal('show');
       });

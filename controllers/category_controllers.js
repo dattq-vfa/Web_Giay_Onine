@@ -154,7 +154,7 @@ router.get('/list_categories',(req,res)=>{
                             <td>`+v.name+`</td>
                             <td>`+v.TYPE+`</td>
                             <td>`+v.Group+`</td>
-                            <td>`+v.img+`</td>
+                            <td><img src="/public/uploads/uploads/`+v.img+`" alt="`+v.img+`"></td>
                             <td>`+v.price+`</td>
                             <td>`+v.quantity+`</td>
                             <td>`+v.description+`</td>
