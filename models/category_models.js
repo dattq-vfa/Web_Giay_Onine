@@ -13,7 +13,7 @@ const Schema = mongoose.Schema;
         imgs : Array,
         price: Number,
         quantity: Number,
-        description: Array,
+        description: String,
         id_category: mongoose.Schema.Types.ObjectId,
         status: {
             type: Boolean,

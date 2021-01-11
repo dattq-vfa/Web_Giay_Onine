@@ -71,7 +71,6 @@ router.post('/upload_file',(req,res)=>{
     {
         // upload image and handle err
         upload.any()(req, res, function(err){
-            
             if(path.length < 1) 
             {
                 res.send('No choosed Image');
@@ -97,7 +96,7 @@ router.post('/upload_file',(req,res)=>{
                             name: req.body.name,
                             price: req.body.price,
                             quantity: req.body.quantity,
-                            description: req.body.content,
+                            description: req.body.content[1],
                             img: link_avatar,
                             imgs: link_items,
                             id_category: localStorage.getItem('id_user')
@@ -125,13 +124,13 @@ router.post('/upload_file',(req,res)=>{
     }
 });
 
-router.post('/SHOW_IMG',(req,res)=>{
-    let c =[];
-    fs.readdirSync("./public/uploads/uploads").forEach(file => {
-        c.push("/public/uploads/uploads/"+file);
-    });
-    res.send(c);
-})
+// router.post('/SHOW_IMG',(req,res)=>{
+//     let c =[];
+//     fs.readdirSync("./public/uploads/uploads").forEach(file => {
+//         c.push("/public/uploads/uploads/"+file);
+//     });
+//     res.send(c);
+// })
 
 router.get('/add_categories',(req,res)=>{
     main = 'categories/add_category_product';
@@ -158,55 +157,94 @@ router.get('/list_categories',(req,res)=>{
                             <td>`+v.img+`</td>
                             <td>`+v.price+`</td>
                             <td>`+v.quantity+`</td>
-                            <td>`+v.description[1]+`</td>
+                            <td>`+v.description+`</td>
                             <td>
-                                <button  class="btn btn-info btn-adjust">Sửa</button>
-                                <button type="button" class="btn btn-outline-danger btn-adjust" data-toggle="modal" data-target="#myModal`+v._id+`">Xóa</button>
+                                <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span>Sửa</button>
+                                <button type="button" class="btn btn-outline-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span>Xóa</button>
                             </td>
                             </tr>
                         </tbody>`
-                str += `<div class="modal" id="myModal`+v._id+`">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Thông báo</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                        Bạn có muốn xóa `+v.name+` không?
-                                    </div>
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="delete_data('`+v._id+`')">Xóa ngay</button>
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Thoát</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`
             });
             res.render('index',{main:main,str:str});//gui du lieu khi su dung ejs
         }
     });
 });
 
-router.get('/list_categories/edit/:id',(req,res)=>{
-    console.log(req.params.id);
-    // link = '/user'
-    // main = 'users/edit';
-    CategoryModel.find({_id : req.params.id})
+router.get('/list_categories/list_delete',(req,res)=>{
+    main = 'categories/list_category_product';
+    CategoryModel.find({status: true })
     .exec((err,data)=>{
-        console.log(data[0]);
-        // res.render('index',{main: main,data: data[0]});
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            str ='';
+            data.forEach((v)=>{
+                str += `<tbody id="list_delete`+v._id+`">
+                            <tr>
+                            <td>`+v.name+`</td>
+                            <td>`+v.TYPE+`</td>
+                            <td>`+v.Group+`</td>
+                            <td>`+v.img+`</td>
+                            <td>`+v.price+`</td>
+                            <td>`+v.quantity+`</td>
+                            <td>`+v.description+`</td>
+                            <td>
+                                <button class="btn btn-info btn-adjust restore_product"><span style="display:none;">`+JSON.stringify(v._id)+`</span>Restore</button>
+                                <button type="button" class="btn btn-outline-danger btn-adjust list_delete_product"><span style="display:none;">`+JSON.stringify(v)+`</span>Delete</button>
+                            </td>
+                            </tr>
+                        </tbody>`
+            });
+            res.render('index',{main:main,str:str});//gui du lieu khi su dung ejs
+        }
+    });
+});
 
+router.post('/update_status_product',(req,res)=>{
+    id = req.body.id;
+    obj =  { status: true };
+    CategoryModel.updateMany({ _id: id },obj,(err,data)=>{
+            if(err)
+            {
+                console.log(err);
+            }
+            else
+            {
+                res.send('da xoa')
+            }
+    });
+});
+
+router.post('/restore_product',(req,res)=>{
+    id = req.body.id;
+    obj =  { status: false };
+    CategoryModel.updateMany({ _id: id },obj,(err,data)=>{
+            if(err)
+            {
+                console.log(err);
+            }
+            else
+            {
+                res.send('Done!')
+            }
+    });
+});
+
+router.post('/delete_product',(req,res)=>{
+    id = req.body.id;
+    CategoryModel.findByIdAndDelete({ _id: id},(err,data)=>{
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            res.send('da xoa')
+        }
     });
 })
-
-// router.get('/Add_Category',(req,res)=>{
-//     main = 'categories/edit_category_product';
-//     res.render('index',{main:main});
-// })
-
 
 module.exports = router; //xuat ra du lieu de su dung
