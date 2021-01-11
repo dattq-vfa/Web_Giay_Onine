@@ -72,6 +72,17 @@ option{
     background-color: #252c35;
     color: white;
 }
+.show_img{
+  position: relative;
+  width: 85px;
+  height: 55px;
+}
+.show_img .btn{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  color: white;
+}
 
   img{
     padding: 4px;
