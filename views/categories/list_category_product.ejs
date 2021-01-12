@@ -270,10 +270,10 @@
         $('#e_quantity').val(e_product.quantity);
         $('#show_img').html(`<img src="/public/uploads/uploads/`+e_product.img+`" alt="`+e_product.img+`" style='border: 2px solid black;'>`);
         e_product.imgs.forEach(element => {
-          $('#show_imgs').append(`<span class="show_img"">
-                                    <img src="/public/uploads/uploads/`+element+`" alt="`+element+`"style='border: 2px solid black;'>
-                                    <button class="btn"">Button</button>
-                                  </span>`);
+        $('#show_imgs').append(`<button class="show_img">
+                                  <img src="/public/uploads/uploads/`+element+`" alt="`+element+`"style='border: 2px solid black;'>
+                                  <i class="fa fa-times btn1" style="font-size:24px; color: rgb(151, 14, 14);"></i>
+                                </button>`);
         });
         CKEDITOR.instances['contents'].setData($.parseJSON($.trim($(this).find('span').html())).description);//get html for ckedditor
         $("#myModaledit").modal('show');

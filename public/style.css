@@ -74,68 +74,68 @@ option{
 }
 .show_img{
   position: relative;
+}
+.btn1{
+  position: absolute;
+  right: 0px;
+  font-size: 20px;
+}
+.btn1:hover{
+  background-color:rgb(207, 201, 201);
+  cursor: pointer;
+}
+
+img{
   width: 85px;
   height: 55px;
 }
-.show_img .btn{
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  color: white;
+.img{
+  margin: auto;
+  width: 80%;
+  display:flex;
+  flex-wrap: wrap;
+  border: solid 2px black;
+  justify-content: space-between;
+}
+.imgs{
+      height: 100px;
+      overflow: auto;
 }
 
-  img{
-    padding: 4px;
-    width: 85px;
-    height: 55px;
-  }
-  .img{
-    margin: auto;
-    width: 80%;
-    display:flex;
-    flex-wrap: wrap;
-    border: solid 2px black;
-    justify-content: space-between;
-  }
-  .imgs{
-        height: 100px;
-        overflow: auto;
-  }
-
-  .sidebar{
-    left: 0px;
-    width: 200px;
-    background-color:#252c35;
-    position: fixed;
-    height: 100%;
-    z-index: 1;
-  }
-  .content{
-    margin-left: 200px;
-    height: 100%;
-    background-color: black;
-    /* padding: 0px 50px; */
-  }
-  .main{
-    height: 100%;
-  }
-  .form-input{
-    width: 50%;
-    min-width: 320px;
-  }
-  a.page-link{
-    border: none;
-    background-color: #f5f5fa;
-    color: black;
-  }
-  a.page-link:hover{
-    background-color: #9c9999  ;
-    color:black;
-  }
-  .page-item.active .page-link{
-    background-color: #37373b !important;
-    color:white !important;
-  }
+.sidebar{
+  left: 0px;
+  width: 200px;
+  background-color:#252c35;
+  position: fixed;
+  height: 100%;
+  z-index: 1;
+}
+.content{
+  margin-left: 200px;
+  height: 100%;
+  background-color: black;
+  /* padding: 0px 50px; */
+}
+.main{
+  height: 100%;
+}
+.form-input{
+  width: 50%;
+  min-width: 320px;
+}
+a.page-link{
+  border: none;
+  background-color: #f5f5fa;
+  color: black;
+}
+a.page-link:hover{
+  background-color: #9c9999  ;
+  color:black;
+}
+.page-item.active .page-link{
+  background-color: #37373b !important;
+  color:white !important;
+}
 
   @media screen and (max-width: 706px) {
       .img_login{
@@ -173,27 +173,27 @@ option{
   }
 
 
-  .dropdown-container {
-    display: none;
-    background-color: #262626;
-    padding-left: 8px;
-  }
-  
-  .btn-circle{
-    border-radius: 50% !important;
-  }
-  .btn-adjust{
-    padding: 2px !important;
-    border-radius: 5px !important;
-  }
-  td{
-    padding: 5px 5px 5px 13px!important;
-  }
-  .lable-input{
-    min-width: 300px;
-    font-weight: bold;
-    color: #FFC312;
-  }
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
+.btn-circle{
+  border-radius: 50% !important;
+}
+.btn-adjust{
+  padding: 2px !important;
+  border-radius: 5px !important;
+}
+td{
+  padding: 5px 5px 5px 13px!important;
+}
+.lable-input{
+  min-width: 300px;
+  font-weight: bold;
+  color: #FFC312;
+}
 
 
 /* mũi tên lên xuống tạo hiệu ứng */

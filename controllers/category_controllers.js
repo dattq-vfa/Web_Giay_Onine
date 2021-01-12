@@ -159,8 +159,8 @@ router.get('/list_categories',(req,res)=>{
                             <td>`+v.quantity+`</td>
                             <td>`+v.description+`</td>
                             <td>
-                                <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span>Sửa</button>
-                                <button type="button" class="btn btn-outline-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span>Xóa</button>
+                                <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-trash"></i></button>
                             </td>
                             </tr>
                         </tbody>`
