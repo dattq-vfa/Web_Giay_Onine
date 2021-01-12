@@ -85,6 +85,11 @@ option{
   cursor: pointer;
 }
 
+.btn_adjust{
+  padding: 0px !important;
+  cursor: auto !important;
+}
+
 img{
   width: 85px;
   height: 55px;

@@ -137,6 +137,9 @@
               <!-- multiple neu input nhieu file -->
               <input type="file" class="form-control" id="e_imgs" name="imgs"  accept=".jpg,.png" multiple>
               <span id="show_imgs"></span>
+
+              <div id="delete_img"></div>
+
               <div><b>Describe:</b></div>
               <textarea  class="form-group" name="content" id="contents"></textarea>
             </div>
@@ -209,6 +212,13 @@
       document.getElementById(e).classList.toggle("show_add_btn");
     }
 
+    function HideFunction(e){
+      let x = document.getElementById(e);
+      x.style.display = "none";
+      console.log(e);
+      $('#delete_img').text(e);
+    }
+
     $(document).ready(function(){
       $('#upload_img').on('submit', function(e){
         e.preventDefault();
@@ -268,12 +278,15 @@
         $('#e_name').val(e_product.name);
         $('#e_price').val(e_product.price);
         $('#e_quantity').val(e_product.quantity);
-        $('#show_img').html(`<img src="/public/uploads/uploads/`+e_product.img+`" alt="`+e_product.img+`" style='border: 2px solid black;'>`);
+        $('#show_img').html(`<span class="show_img" id="`+e_product.img+`">
+                              <img src="/public/uploads/uploads/`+e_product.img+`" alt="`+e_product.img+`" style='border: 2px solid black;'>
+                              <i class="fa fa-times btn1" onclick="HideFunction('`+e_product.img+`')" style="font-size:24px; color: rgb(151, 14, 14);"></i>
+                            </span>`);
         e_product.imgs.forEach(element => {
-        $('#show_imgs').append(`<button class="show_img">
+        $('#show_imgs').append(`<span class="btn btn_adjust show_img" id="`+element+`">
                                   <img src="/public/uploads/uploads/`+element+`" alt="`+element+`"style='border: 2px solid black;'>
-                                  <i class="fa fa-times btn1" style="font-size:24px; color: rgb(151, 14, 14);"></i>
-                                </button>`);
+                                  <i class="fa fa-times btn1" onclick="HideFunction('`+element+`')" style="font-size:24px; color: rgb(151, 14, 14);"></i>
+                                </span>`);
         });
         CKEDITOR.instances['contents'].setData($.parseJSON($.trim($(this).find('span').html())).description);//get html for ckedditor
         $("#myModaledit").modal('show');

@@ -39,14 +39,14 @@ const storage = multer.diskStorage({
                         // file.fieldname +  upload.any() để lấy tên file hình
                         if(file.fieldname == 'img')
                         {
-                            let path_img ='avatar'+ '-' +  req.body.name + '-' + Date.now() + '-' + file.originalname;
+                            let path_img ='avatar'+ '-' + Date.now() + '-' + file.originalname;
                             cb(null, path_img);
                             link_avatar = path_img;
                             path.push("avatar");
                         }
                         else
                         {
-                            let path_img ='item'+ '-' + req.body.name + '-' + Date.now() + '-' + file.originalname;
+                            let path_img ='item'+ '-' + Date.now() + '-' + file.originalname;
                             cb(null, path_img);
                             link_items.push(path_img);
                             path.push("items");
@@ -124,14 +124,6 @@ router.post('/upload_file',(req,res)=>{
     }
 });
 
-// router.post('/SHOW_IMG',(req,res)=>{
-//     let c =[];
-//     fs.readdirSync("./public/uploads/uploads").forEach(file => {
-//         c.push("/public/uploads/uploads/"+file);
-//     });
-//     res.send(c);
-// })
-
 router.get('/add_categories',(req,res)=>{
     main = 'categories/add_category_product';
     res.render('index',{main:main});//gui du lieu khi su dung ejs
@@ -159,8 +151,8 @@ router.get('/list_categories',(req,res)=>{
                             <td>`+v.quantity+`</td>
                             <td>`+v.description+`</td>
                             <td>
-                                <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-pencil"></i></button>
-                                <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-pencil" style="padding:0px 5px"></i></button>
+                                <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-trash" style="padding:0px 5px"></i></button>
                             </td>
                             </tr>
                         </tbody>`
@@ -248,3 +240,11 @@ router.post('/delete_product',(req,res)=>{
 })
 
 module.exports = router; //xuat ra du lieu de su dung
+
+// router.post('/SHOW_IMG',(req,res)=>{
+//     let c =[];
+//     fs.readdirSync("./public/uploads/uploads").forEach(file => {
+//         c.push("/public/uploads/uploads/"+file);
+//     });
+//     res.send(c);
+// })
