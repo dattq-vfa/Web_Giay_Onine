@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+var fs = require('fs');
 //load multer
 const multer = require('multer');
 const CategoryModel = require('../models/category_models');
@@ -34,7 +35,7 @@ const storage = multer.diskStorage({
                 }
                 else
                 {
-                    if(data.length<1)
+                    if(data.length<1 || req.body.e_form == 'e_form')
                     {
                         // file.fieldname +  upload.any() để lấy tên file hình
                         if(file.fieldname == 'img')
@@ -122,6 +123,47 @@ router.post('/upload_file',(req,res)=>{
         dif_name='';
         res.send('Name already exists');
     }
+});
+
+router.post('/edit_file',(req,res)=>{
+    upload.any()(req, res, function(err){
+        let data_img = req.body.name_img.split(',');
+        console.log(data_img);
+        if(err instanceof multer.MulterError)
+        {
+            (err.field == "img") ? res.send("File Avatar quá lớn"): res.send("File Items quá lớn");
+        }
+        else if(err) 
+        {
+            res.send(err);
+        }
+        else
+        {
+            delete_img(data_img,'avatar');
+            delete_img(data_img,'item');
+            res.send("ok");
+        }
+//         obj =  { 
+//             TYPE: req.body.TYPE,
+//             Group: req.body.Group,
+//             name: req.body.name,
+//             price: req.body.price,
+//             quantity: req.body.quantity,
+//             img: link_avatar,
+//             description: req.body.content[1],
+//             id_category: localStorage.getItem('id_user')
+//         };
+// CategoryModel.updateMany({ _id: req.body.id },obj,(err,data)=>{
+//     if(err)
+//     {
+//         console.log(err);
+//     }
+//     else
+//     {
+//         res.send('Completed!')
+//     }
+// });
+    });
 });
 
 router.get('/add_categories',(req,res)=>{
@@ -248,3 +290,15 @@ module.exports = router; //xuat ra du lieu de su dung
 //     });
 //     res.send(c);
 // })
+function delete_img(data,key_data){
+    for(i in data)
+    {
+        if(data[i].includes(key_data))
+        {
+            fs.unlink('./public/uploads/uploads/'+ data[i], function (err) {
+                if (err) throw err;
+                console.log('File deleted!');
+            });
+        }
+    }  
+}

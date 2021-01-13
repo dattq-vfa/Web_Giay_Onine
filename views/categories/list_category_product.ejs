@@ -130,6 +130,9 @@
               <input class="form-control" id="e_price" name="price" placeholder="Price..." type="number" required>
               <b>Quantity:</b>
               <input class="form-control" id="e_quantity" name="quantity" placeholder="Quantity..." type="number" required>
+              <!-- get name edit form -->
+              <input class="form-control" name="e_form" type="text" value="e_form" style="display: none;">
+              <!-- get name edit form -->
               <b>Avatar Image:</b> (Format: .jpg .png)
               <input type="file" class="form-control" id="e_img" name="img" accept=".jpg,.png" >
               <span id="show_img"></span>
@@ -137,15 +140,15 @@
               <!-- multiple neu input nhieu file -->
               <input type="file" class="form-control" id="e_imgs" name="imgs"  accept=".jpg,.png" multiple>
               <span id="show_imgs"></span>
-
-              <div id="delete_img"></div>
-
+              <!-- get name img delete -->
+              <span id="delete_img" style="display: none;"></span>
+              <!-- get name img delete -->
               <div><b>Describe:</b></div>
               <textarea  class="form-group" name="content" id="contents"></textarea>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-              <button type="submit" class="btn btn-success"><i class="fa fa-upload"></i> Upload</button>
+              <button type="submit" class="btn btn-success"><span id="id_e_product" style="display: none;" ></span><i class="fa fa-upload"></i> Upload</button>
               <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
             </div>
           </div>
@@ -211,12 +214,12 @@
     function addFunction(e) {
       document.getElementById(e).classList.toggle("show_add_btn");
     }
-
+    let b="";
     function HideFunction(e){
       let x = document.getElementById(e);
       x.style.display = "none";
-      console.log(e);
-      $('#delete_img').text(e);
+      tmp_img +=  e +",";
+      $('#delete_img').text(tmp_img);
     }
 
     $(document).ready(function(){
@@ -245,30 +248,32 @@
       
       $('#e_upload_img').on('submit', function(e){
         e.preventDefault();
-        console.log("ok");
-        // let data = new FormData(this);
-        // data.append('content', CKEDITOR.instances['content'].getData());
-        // $.ajax({
-        //         url: 'upload_file',
-        //         type: 'POST',
-        //         data: data,
-        //         cache: false,
-        //         processData: false,
-        //         contentType: false,
-        //         success: function (result) {
-        //           alert(result);
-        //           if(result=="ok")
-        //           {
-        //             $("#upload_img").trigger("reset");//reset form
-        //             CKEDITOR.instances['content'].setData('');
-        //           }
-        //         }
-        // });
-        // return false;
+
+        let data = new FormData(this);
+        data.append('content', CKEDITOR.instances['contents'].getData());
+        data.append('id', $('#id_e_product').text());
+        data.append('name_img', $('#delete_img').text());
+
+        $.ajax({
+                url: 'edit_file',
+                type: 'POST',
+                data: data,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                  alert(result);
+                }
+        });
+        return false;
       }); 
 
       $('.edit_product').on('click', function(e){
         e.preventDefault();
+
+        tmp_img="";
+        
+        $('#delete_img').text("");
         $('#show_imgs').html('');
         $('#e_img').val('');
         $('#e_imgs').val('');
@@ -278,6 +283,7 @@
         $('#e_name').val(e_product.name);
         $('#e_price').val(e_product.price);
         $('#e_quantity').val(e_product.quantity);
+        $('#id_e_product').text(e_product._id);
         $('#show_img').html(`<span class="show_img" id="`+e_product.img+`">
                               <img src="/public/uploads/uploads/`+e_product.img+`" alt="`+e_product.img+`" style='border: 2px solid black;'>
                               <i class="fa fa-times btn1" onclick="HideFunction('`+e_product.img+`')" style="font-size:24px; color: rgb(151, 14, 14);"></i>
