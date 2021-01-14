@@ -27,6 +27,8 @@ const storage = multer.diskStorage({
         }
         else
         {
+            console.log(file);
+            console.log("---------------");
             CategoryModel.find({name: req.body.name})
             .exec((err,data)=>{
                 if(err)
@@ -72,6 +74,7 @@ router.post('/upload_file',(req,res)=>{
     {
         // upload image and handle err
         upload.any()(req, res, function(err){
+            
             if(path.length < 1) 
             {
                 res.send('No choosed Image');
@@ -110,6 +113,7 @@ router.post('/upload_file',(req,res)=>{
                         }
                         else
                         {
+                            link_avatar=''; link_items=[];
                             res.send("ok");
                         }
                     });
@@ -128,7 +132,9 @@ router.post('/upload_file',(req,res)=>{
 router.post('/edit_file',(req,res)=>{
     upload.any()(req, res, function(err){
         let data_img = req.body.name_img.split(',');
-        console.log(data_img);
+        let list_imgs = req.body.e_list_img.split(',');
+        // get list_imgs
+        let get_list_imgs = list_imgs.filter(item => ![''].includes(item));
         if(err instanceof multer.MulterError)
         {
             (err.field == "img") ? res.send("File Avatar quá lớn"): res.send("File Items quá lớn");
@@ -139,30 +145,33 @@ router.post('/edit_file',(req,res)=>{
         }
         else
         {
-            delete_img(data_img,'avatar');
-            delete_img(data_img,'item');
-            res.send("ok");
+            (link_avatar!="") ? avatar = link_avatar : avatar = req.body.e_avatar_img;
+            (link_items.length > 0) ? items = get_list_imgs.concat(link_items) : items = get_list_imgs;
+                    obj =  { 
+                                TYPE: req.body.TYPE,
+                                Group: req.body.Group,
+                                name: req.body.name,
+                                price: req.body.price,
+                                quantity: req.body.quantity,
+                                img: avatar,
+                                imgs: items,
+                                description: req.body.content[1],
+                                id_category: localStorage.getItem('id_user')
+                            };
+                    CategoryModel.updateMany({ _id: req.body.id },obj,(err,data)=>{
+                        if(err)
+                        {
+                            console.log(err);
+                        }
+                        else
+                        {
+                            delete_img(data_img,'avatar');
+                            delete_img(data_img,'item');
+                            avatar=''; items=['']; get_list_imgs=['']; link_avatar=''; link_items= [];
+                            res.send('Completed!')
+                        }
+                    });
         }
-//         obj =  { 
-//             TYPE: req.body.TYPE,
-//             Group: req.body.Group,
-//             name: req.body.name,
-//             price: req.body.price,
-//             quantity: req.body.quantity,
-//             img: link_avatar,
-//             description: req.body.content[1],
-//             id_category: localStorage.getItem('id_user')
-//         };
-// CategoryModel.updateMany({ _id: req.body.id },obj,(err,data)=>{
-//     if(err)
-//     {
-//         console.log(err);
-//     }
-//     else
-//     {
-//         res.send('Completed!')
-//     }
-// });
     });
 });
 

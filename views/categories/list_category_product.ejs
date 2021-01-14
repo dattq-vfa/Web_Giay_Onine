@@ -134,15 +134,19 @@
               <input class="form-control" name="e_form" type="text" value="e_form" style="display: none;">
               <!-- get name edit form -->
               <b>Avatar Image:</b> (Format: .jpg .png)
-              <input type="file" class="form-control" id="e_img" name="img" accept=".jpg,.png" >
+              <input type="file" class="form-control" id="e_img" name="img" accept=".jpg,.png" >  
               <span id="show_img"></span>
+              <!-- get name avatar -->
+              <span id="e_avatar_img" style="display: none;"></span>
+              <!-- get name avatar -->
               <div><b>Items Image:</b> (Format: .jpg .png)</div>
               <!-- multiple neu input nhieu file -->
               <input type="file" class="form-control" id="e_imgs" name="imgs"  accept=".jpg,.png" multiple>
               <span id="show_imgs"></span>
-              <!-- get name img delete -->
+              <!-- get name img delete and list img-->
               <span id="delete_img" style="display: none;"></span>
-              <!-- get name img delete -->
+              <span id="e_list_img" style="display: none;"></span>
+              <!-- get name img delete and list img-->
               <div><b>Describe:</b></div>
               <textarea  class="form-group" name="content" id="contents"></textarea>
             </div>
@@ -214,149 +218,164 @@
     function addFunction(e) {
       document.getElementById(e).classList.toggle("show_add_btn");
     }
-    let b="";
+    let tmp_img="";
     function HideFunction(e){
-      let x = document.getElementById(e);
-      x.style.display = "none";
-      tmp_img +=  e +",";
-      $('#delete_img').text(tmp_img);
+        let x = document.getElementById(e);
+        x.style.display = "none";
+        tmp_img +=  e +",";
+        $('#delete_img').text(tmp_img);
+        // get list imgs
+        if(e.includes('item'))
+        {
+          list_imgs = $('#e_list_img').text().split(e);
+          $('#e_list_img').text(list_imgs);
+        }
+        else if(e.includes('avatar'))
+        {
+          // get name avatar
+          $('#e_avatar_img').text('');
+        }
     }
 
     $(document).ready(function(){
       $('#upload_img').on('submit', function(e){
-        e.preventDefault();
-        let data = new FormData(this);
-        data.append('content', CKEDITOR.instances['content'].getData());
-        $.ajax({
-                url: 'upload_file',
-                type: 'POST',
-                data: data,
-                cache: false,
-                processData: false,
-                contentType: false,
-                success: function (result) {
-                  alert(result);
-                  if(result=="ok")
-                  {
-                    $("#upload_img").trigger("reset");//reset form
-                    CKEDITOR.instances['content'].setData('');
+          e.preventDefault();
+          let data = new FormData(this);
+          data.append('content', CKEDITOR.instances['content'].getData());
+          $.ajax({
+                  url: 'upload_file',
+                  type: 'POST',
+                  data: data,
+                  cache: false,
+                  processData: false,
+                  contentType: false,
+                  success: function (result) {
+                    alert(result);
+                    if(result=="ok")
+                    {
+                      $("#upload_img").trigger("reset");//reset form
+                      CKEDITOR.instances['content'].setData('');
+                      window.location.href = 'list_categories';
+                    }
                   }
-                }
-        });
-        return false;
+          });
+          return false;
       }); 
       
       $('#e_upload_img').on('submit', function(e){
-        e.preventDefault();
+          e.preventDefault();
 
-        let data = new FormData(this);
-        data.append('content', CKEDITOR.instances['contents'].getData());
-        data.append('id', $('#id_e_product').text());
-        data.append('name_img', $('#delete_img').text());
-
-        $.ajax({
-                url: 'edit_file',
-                type: 'POST',
-                data: data,
-                cache: false,
-                processData: false,
-                contentType: false,
-                success: function (result) {
-                  alert(result);
-                }
-        });
-        return false;
+          let data = new FormData(this);
+          data.append('content', CKEDITOR.instances['contents'].getData());
+          data.append('id', $('#id_e_product').text());
+          data.append('name_img', $('#delete_img').text());
+          data.append('e_list_img', $('#e_list_img').text());
+          data.append('e_avatar_img', $('#e_avatar_img').text());
+          $.ajax({
+                  url: 'edit_file',
+                  type: 'POST',
+                  data: data,
+                  cache: false,
+                  processData: false,
+                  contentType: false,
+                  success: function (result) {
+                    alert(result);
+                    window.location.href = 'list_categories';
+                  }
+          });
+          return false;
       }); 
 
       $('.edit_product').on('click', function(e){
-        e.preventDefault();
+          e.preventDefault();
 
-        tmp_img="";
-        
-        $('#delete_img').text("");
-        $('#show_imgs').html('');
-        $('#e_img').val('');
-        $('#e_imgs').val('');
-        let e_product = $.parseJSON($.trim($(this).find('span').text()));
-        $('#e_TYPE').val(e_product.TYPE);
-        $('#e_Group').val(e_product.Group);
-        $('#e_name').val(e_product.name);
-        $('#e_price').val(e_product.price);
-        $('#e_quantity').val(e_product.quantity);
-        $('#id_e_product').text(e_product._id);
-        $('#show_img').html(`<span class="show_img" id="`+e_product.img+`">
-                              <img src="/public/uploads/uploads/`+e_product.img+`" alt="`+e_product.img+`" style='border: 2px solid black;'>
-                              <i class="fa fa-times btn1" onclick="HideFunction('`+e_product.img+`')" style="font-size:24px; color: rgb(151, 14, 14);"></i>
-                            </span>`);
-        e_product.imgs.forEach(element => {
-        $('#show_imgs').append(`<span class="btn btn_adjust show_img" id="`+element+`">
-                                  <img src="/public/uploads/uploads/`+element+`" alt="`+element+`"style='border: 2px solid black;'>
-                                  <i class="fa fa-times btn1" onclick="HideFunction('`+element+`')" style="font-size:24px; color: rgb(151, 14, 14);"></i>
-                                </span>`);
-        });
-        CKEDITOR.instances['contents'].setData($.parseJSON($.trim($(this).find('span').html())).description);//get html for ckedditor
-        $("#myModaledit").modal('show');
+          tmp_img="";
+          $('#delete_img').text("");   
+          $('#show_imgs').html('');
+          $('#e_img').val('');
+          $('#e_imgs').val('');
+          let e_product = $.parseJSON($.trim($(this).find('span').text()));
+          $('#e_list_img').text(e_product.imgs);
+          $('#e_avatar_img').text(e_product.img);
+          $('#e_TYPE').val(e_product.TYPE);
+          $('#e_Group').val(e_product.Group);
+          $('#e_name').val(e_product.name);
+          $('#e_price').val(e_product.price);
+          $('#e_quantity').val(e_product.quantity);
+          $('#id_e_product').text(e_product._id);
+          $('#show_img').html(`<span class="show_img" id="`+e_product.img+`">
+                                <img src="/public/uploads/uploads/`+e_product.img+`" alt="`+e_product.img+`" style='border: 2px solid black;'>
+                                <i class="fa fa-times btn1" onclick="HideFunction('`+e_product.img+`')" style="font-size:24px; color: rgb(151, 14, 14);"></i>
+                              </span>`);
+          e_product.imgs.forEach(element => {
+          $('#show_imgs').append(`<span class="btn btn_adjust show_img" id="`+element+`">
+                                    <img src="/public/uploads/uploads/`+element+`" alt="`+element+`"style='border: 2px solid black;'>
+                                    <i class="fa fa-times btn1" onclick="HideFunction('`+element+`')" style="font-size:24px; color: rgb(151, 14, 14);"></i>
+                                  </span>`);
+          });
+          CKEDITOR.instances['contents'].setData($.parseJSON($.trim($(this).find('span').html())).description);//get html for ckedditor
+          $("#myModaledit").modal('show');
       });
       
       $('.delete_product_tmp').on('click', function(e){
-        e.preventDefault();
-        let delete_product = $.parseJSON($.trim($(this).find('span').text()));
-        $('#f_delete_name_tmp').text(delete_product.name);
-        $('#f_delete_tmp').text(delete_product._id);
-        $("#myModal-delete-tmp").modal('show');
+          e.preventDefault();
+          let delete_product = $.parseJSON($.trim($(this).find('span').text()));
+          $('#f_delete_name_tmp').text(delete_product.name);
+          $('#f_delete_tmp').text(delete_product._id);
+          $("#myModal-delete-tmp").modal('show');
       });
 
       $('#btn_delete_tmp').on('click', function(e){
-        e.preventDefault();
-        id = $(this).find('span').text();
-        $.ajax({
-          url: 'update_status_product',
-          type: 'POST',
-          data: {id: id},
-          success: function (result) {
-            alert(result);
-            window.location.href = 'list_categories'; //chuyen trang
-          }
-        });
-        return false;
+          e.preventDefault();
+          id = $(this).find('span').text();
+          $.ajax({
+            url: 'update_status_product',
+            type: 'POST',
+            data: {id: id},
+            success: function (result) {
+              alert(result);
+              window.location.href = 'list_categories'; //chuyen trang
+            }
+          });
+          return false;
       });
 
       $('.list_delete_product').on('click', function(e){
-        e.preventDefault();
-        let list_delete_product = $.parseJSON($.trim($(this).find('span').text()));
-        $('#f_delete_name').text("vĩnh viễn " + list_delete_product.name);
-        $('#f_delete').text(list_delete_product._id);
-        $("#myModal-list-delete").modal('show');
+          e.preventDefault();
+          let list_delete_product = $.parseJSON($.trim($(this).find('span').text()));
+          $('#f_delete_name').text("vĩnh viễn " + list_delete_product.name);
+          $('#f_delete').text(list_delete_product._id);
+          $("#myModal-list-delete").modal('show');
       });
 
       $('#delete_database_product').on('click', function(e){
-        e.preventDefault();
-        id = $(this).find('span').text();
-        $.ajax({
-          url: 'delete_product',
-          type: 'POST',
-          data: {id: id},
-          success: function (result) {
-            alert(result);
-            window.location.href = 'list_categories/list_delete'; //chuyen trang
-          }
-        });
-        return false;
+          e.preventDefault();
+          id = $(this).find('span').text();
+          $.ajax({
+            url: 'delete_product',
+            type: 'POST',
+            data: {id: id},
+            success: function (result) {
+              alert(result);
+              window.location.href = 'list_categories/list_delete'; //chuyen trang
+            }
+          });
+          return false;
       });
 
       $('.restore_product').on('click', function(e){
-        e.preventDefault();
-        id = $.parseJSON($.trim($(this).find('span').text()));
-        $.ajax({
-          url: 'restore_product',
-          type: 'POST',
-          data: {id: id},
-          success: function (result) {
-            alert(result);
-            window.location.href = 'list_categories/list_delete'; //chuyen trang
-          }
-        });
-        return false;
+          e.preventDefault();
+          id = $.parseJSON($.trim($(this).find('span').text()));
+          $.ajax({
+            url: 'restore_product',
+            type: 'POST',
+            data: {id: id},
+            success: function (result) {
+              alert(result);
+              window.location.href = 'list_categories/list_delete'; //chuyen trang
+            }
+          });
+          return false;
       });
 
     });
