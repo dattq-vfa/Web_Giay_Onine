@@ -27,8 +27,6 @@ const storage = multer.diskStorage({
         }
         else
         {
-            console.log(file);
-            console.log("---------------");
             CategoryModel.find({name: req.body.name})
             .exec((err,data)=>{
                 if(err)
@@ -277,20 +275,46 @@ router.post('/restore_product',(req,res)=>{
 });
 
 router.post('/delete_product',(req,res)=>{
-    id = req.body.id;
-    CategoryModel.findByIdAndDelete({ _id: id},(err,data)=>{
+    let data_delete = JSON.parse(req.body.database_product);
+    CategoryModel.findByIdAndDelete({ _id: data_delete._id},(err,data)=>{
         if(err)
         {
             console.log(err);
         }
         else
         {
+            delete_img(data_delete.img,'avatar');
+            delete_img(data_delete.imgs,'item');
+            data_delete =[];
             res.send('da xoa')
         }
     });
 })
 
 module.exports = router; //xuat ra du lieu de su dung
+
+function delete_img(data,key_data){
+    if(typeof(data)=='string')
+    {
+        fs.unlink('./public/uploads/uploads/'+ data, function (err) {
+            if (err) throw err;
+            console.log('File deleted!');
+        });
+    }
+    else
+    {
+        for(i in data)
+        {
+            if(data[i].includes(key_data))
+            {
+                fs.unlink('./public/uploads/uploads/'+ data[i], function (err) {
+                    if (err) throw err;
+                    console.log('File deleted!');
+                });
+            }
+        } 
+    } 
+}
 
 // router.post('/SHOW_IMG',(req,res)=>{
 //     let c =[];
@@ -299,15 +323,3 @@ module.exports = router; //xuat ra du lieu de su dung
 //     });
 //     res.send(c);
 // })
-function delete_img(data,key_data){
-    for(i in data)
-    {
-        if(data[i].includes(key_data))
-        {
-            fs.unlink('./public/uploads/uploads/'+ data[i], function (err) {
-                if (err) throw err;
-                console.log('File deleted!');
-            });
-        }
-    }  
-}

@@ -344,19 +344,20 @@
           e.preventDefault();
           let list_delete_product = $.parseJSON($.trim($(this).find('span').text()));
           $('#f_delete_name').text("vĩnh viễn " + list_delete_product.name);
-          $('#f_delete').text(list_delete_product._id);
+          $('#f_delete').text(JSON.stringify(list_delete_product));
           $("#myModal-list-delete").modal('show');
       });
 
       $('#delete_database_product').on('click', function(e){
           e.preventDefault();
-          id = $(this).find('span').text();
+          let database_product = $(this).find('span').text();
           $.ajax({
             url: 'delete_product',
             type: 'POST',
-            data: {id: id},
+            data: {database_product:database_product},
             success: function (result) {
               alert(result);
+              $('#f_delete').text('');
               window.location.href = 'list_categories/list_delete'; //chuyen trang
             }
           });
