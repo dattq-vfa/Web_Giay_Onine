@@ -92,16 +92,14 @@ router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
         //0 ,2 ,4 ,6
         //xetActive=page;
     }
-
     //xuat ra view
-        
     // first
     view_totalPage=`<li class="page-item">
     <a class="page-link" href="list_categories/1">First</a></li>`;
     // Prev
     if(pageNumber==1)
     {
-        view_totalPage += `<li class="page-item active">
+        view_totalPage += `<li class="page-item">
         <a class="page-link" href="list_categories/`+1+`">Prev</a></li>`;
     }
     else
@@ -110,10 +108,11 @@ router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
         <a class="page-link" href="list_categories/`+(pageNumber-1)+`">Prev</a></li>`;
     }
 
-
     for(let i = 1; i <= totalPage; i++)
     {
-        view_totalPage += `<li class="page-item">
+        let tmp='';
+        (parseInt(pageNumber)==i) ? tmp = 'active': tmp ='';
+        view_totalPage += `<li class="page-item `+tmp+`">
         <a class="page-link" href="list_categories/`+i+`">
         ` + i + `</a></li>`;
     }
