@@ -67,6 +67,109 @@ var limits = {fileSize: 1024*5000}; // hieu la 200kb
 // Gọi ra sử dụng
 var upload = multer({storage: storage, limits: limits });
 
+//---------------------phân trang---------------------------------
+router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
+    main = 'categories/list_category_product';
+    // 1.limit 
+    let limit = 2;
+    // 2. tong so document 
+    let totalDocument = await CategoryModel.find({status: false})
+    // => tong so trang
+    let totalPage = Math.ceil(totalDocument.length/limit);
+
+    // 3. start 
+    let pageNumber = req.params.pageNumber;
+    if(typeof(pageNumber)=="string") pageNumber = parseInt(pageNumber);
+    else if(pageNumber==undefined) pageNumber=1;
+    if(pageNumber==undefined || pageNumber==1)
+    {
+        start =0 ;
+        //xetActive=1;
+    }
+    else if(pageNumber>=2)
+    {
+        start = (pageNumber-1)*limit;
+        //0 ,2 ,4 ,6
+        //xetActive=page;
+    }
+
+    //xuat ra view
+        
+    // first
+    view_totalPage=`<li class="page-item">
+    <a class="page-link" href="list_categories/1">First</a></li>`;
+    // Prev
+    if(pageNumber==1)
+    {
+        view_totalPage += `<li class="page-item active">
+        <a class="page-link" href="list_categories/`+1+`">Prev</a></li>`;
+    }
+    else
+    {
+        view_totalPage += `<li class="page-item">
+        <a class="page-link" href="list_categories/`+(pageNumber-1)+`">Prev</a></li>`;
+    }
+
+
+    for(let i = 1; i <= totalPage; i++)
+    {
+        view_totalPage += `<li class="page-item">
+        <a class="page-link" href="list_categories/`+i+`">
+        ` + i + `</a></li>`;
+    }
+    // Next
+    if(totalPage>pageNumber)
+    {
+        view_totalPage += `<li class="page-item">
+        <a class="page-link" href="list_categories/`+(pageNumber+1)+`">Next</a></li>`;
+    }
+    else
+    {
+        view_totalPage += `<li class="page-item">
+        <a class="page-link" href="list_categories/`+totalPage+`">Next</a></li>`;
+    }
+
+    // Last
+    view_totalPage += `<li class="page-item">
+    <a class="page-link" href="list_categories/`+totalPage+`">Last</a></li>`;
+
+    CategoryModel.find({status: false})
+    .skip(start)// giữ  trang
+    .limit(limit)
+    .sort({_id: -1})
+    .exec((err,data)=>{
+        if(err)
+        {
+            res.send({kq: 0, err: err})
+        }
+        else
+        {
+            str ='';
+                data.forEach((v)=>{
+                    str += `<tbody id="`+v._id+`">
+                                <tr>
+                                <td>`+v.name+`</td>
+                                <td>`+v.TYPE+`</td>
+                                <td>`+v.Group+`</td>
+                                <td><img src="/public/uploads/uploads/`+v.img+`" alt="`+v.img+`"></td>
+                                <td>`+v.price+`</td>
+                                <td>`+v.quantity+`</td>
+                                <td>`+v.description+`</td>
+                                <td>
+                                    <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-pencil" style="padding:0px 5px"></i></button>
+                                    <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-trash" style="padding:0px 5px"></i></button>
+                                </td>
+                                </tr>
+                            </tbody>`
+                });
+
+            res.render('index', {main: main, str:str, view_totalPage: view_totalPage});
+        }
+    });
+});
+
+//---------------------phân trang---------------------------------
+
 router.post('/upload_file',(req,res)=>{
     if(dif_name != 'err')
     {
@@ -179,36 +282,36 @@ router.get('/add_categories',(req,res)=>{
 });
 
 router.get('/list_categories',(req,res)=>{
-    main = 'categories/list_category_product';
-    CategoryModel.find({status: false })
-    .exec((err,data)=>{
-        if(err)
-        {
-            console.log(err);
-        }
-        else
-        {
-            str ='';
-            data.forEach((v)=>{
-                str += `<tbody id="`+v._id+`">
-                            <tr>
-                            <td>`+v.name+`</td>
-                            <td>`+v.TYPE+`</td>
-                            <td>`+v.Group+`</td>
-                            <td><img src="/public/uploads/uploads/`+v.img+`" alt="`+v.img+`"></td>
-                            <td>`+v.price+`</td>
-                            <td>`+v.quantity+`</td>
-                            <td>`+v.description+`</td>
-                            <td>
-                                <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-pencil" style="padding:0px 5px"></i></button>
-                                <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-trash" style="padding:0px 5px"></i></button>
-                            </td>
-                            </tr>
-                        </tbody>`
-            });
-            res.render('index',{main:main,str:str});//gui du lieu khi su dung ejs
-        }
-    });
+    // main = 'categories/list_category_product';
+    // CategoryModel.find({status: false })
+    // .exec((err,data)=>{
+    //     if(err)
+    //     {
+    //         console.log(err);
+    //     }
+    //     else
+    //     {
+    //         str ='';
+    //         data.forEach((v)=>{
+    //             str += `<tbody id="`+v._id+`">
+    //                         <tr>
+    //                         <td>`+v.name+`</td>
+    //                         <td>`+v.TYPE+`</td>
+    //                         <td>`+v.Group+`</td>
+    //                         <td><img src="/public/uploads/uploads/`+v.img+`" alt="`+v.img+`"></td>
+    //                         <td>`+v.price+`</td>
+    //                         <td>`+v.quantity+`</td>
+    //                         <td>`+v.description+`</td>
+    //                         <td>
+    //                             <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-pencil" style="padding:0px 5px"></i></button>
+    //                             <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-trash" style="padding:0px 5px"></i></button>
+    //                         </td>
+    //                         </tr>
+    //                     </tbody>`
+    //         });
+    //         res.render('index',{main:main,str:str});//gui du lieu khi su dung ejs
+    //     }
+    // });
 });
 
 router.get('/list_categories/list_delete',(req,res)=>{
@@ -296,10 +399,13 @@ module.exports = router; //xuat ra du lieu de su dung
 function delete_img(data,key_data){
     if(typeof(data)=='string')
     {
-        fs.unlink('./public/uploads/uploads/'+ data, function (err) {
-            if (err) throw err;
-            console.log('File deleted!');
-        });
+        if (fs.existsSync('./public/uploads/uploads/'+ data))
+        {
+            fs.unlink('./public/uploads/uploads/'+ data, function (err) {
+                if (err) throw err;
+                console.log('File deleted!');
+            });
+        }
     }
     else
     {
@@ -307,10 +413,13 @@ function delete_img(data,key_data){
         {
             if(data[i].includes(key_data))
             {
-                fs.unlink('./public/uploads/uploads/'+ data[i], function (err) {
-                    if (err) throw err;
-                    console.log('File deleted!');
-                });
+                if (fs.existsSync('./public/uploads/uploads/'+ data[i]))
+                {
+                    fs.unlink('./public/uploads/uploads/'+ data[i], function (err) {
+                        if (err) throw err;
+                        console.log('File deleted!');
+                    });
+                }
             }
         } 
     } 
