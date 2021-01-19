@@ -67,9 +67,11 @@ var limits = {fileSize: 1024*5000}; // hieu la 200kb
 // Gọi ra sử dụng
 var upload = multer({storage: storage, limits: limits });
 
+var link = {home:'',category:'',user:''};
 //---------------------phân trang---------------------------------
 router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
     main = 'categories/list_category_product';
+    link.category = 'active';
     // 1.limit 
     let limit = 2;
     // 2. tong so document 
@@ -145,8 +147,7 @@ router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
         {
             str ='';
                 data.forEach((v)=>{
-                    str += `<tbody id="`+v._id+`">
-                                <tr>
+                    str +=  `<tr id="`+v._id+`">
                                 <td>`+v.name+`</td>
                                 <td>`+v.TYPE+`</td>
                                 <td>`+v.Group+`</td>
@@ -158,11 +159,10 @@ router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
                                     <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-pencil" style="padding:0px 5px"></i></button>
                                     <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-trash" style="padding:0px 5px"></i></button>
                                 </td>
-                                </tr>
-                            </tbody>`
+                            </tr>`
                 });
-
-            res.render('index', {main: main, str:str, view_totalPage: view_totalPage});
+            
+            res.render('index', {main: main, str:str, view_totalPage: view_totalPage, link: link});
         }
     });
 });
@@ -277,44 +277,14 @@ router.post('/edit_file',(req,res)=>{
 
 router.get('/add_categories',(req,res)=>{
     main = 'categories/add_category_product';
-    res.render('index',{main:main});//gui du lieu khi su dung ejs
+    link.category = 'active';
+    res.render('index',{main:main, link: link});//gui du lieu khi su dung ejs
 });
 
-router.get('/list_categories',(req,res)=>{
-    // main = 'categories/list_category_product';
-    // CategoryModel.find({status: false })
-    // .exec((err,data)=>{
-    //     if(err)
-    //     {
-    //         console.log(err);
-    //     }
-    //     else
-    //     {
-    //         str ='';
-    //         data.forEach((v)=>{
-    //             str += `<tbody id="`+v._id+`">
-    //                         <tr>
-    //                         <td>`+v.name+`</td>
-    //                         <td>`+v.TYPE+`</td>
-    //                         <td>`+v.Group+`</td>
-    //                         <td><img src="/public/uploads/uploads/`+v.img+`" alt="`+v.img+`"></td>
-    //                         <td>`+v.price+`</td>
-    //                         <td>`+v.quantity+`</td>
-    //                         <td>`+v.description+`</td>
-    //                         <td>
-    //                             <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-pencil" style="padding:0px 5px"></i></button>
-    //                             <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fa fa-trash" style="padding:0px 5px"></i></button>
-    //                         </td>
-    //                         </tr>
-    //                     </tbody>`
-    //         });
-    //         res.render('index',{main:main,str:str});//gui du lieu khi su dung ejs
-    //     }
-    // });
-});
 
-router.get('/list_categories/list_delete',(req,res)=>{
+router.get('/list_delete_categories',(req,res)=>{
     main = 'categories/list_category_product';
+    link.category = 'active';
     CategoryModel.find({status: true })
     .exec((err,data)=>{
         if(err)
@@ -341,7 +311,7 @@ router.get('/list_categories/list_delete',(req,res)=>{
                             </tr>
                         </tbody>`
             });
-            res.render('index',{main:main,str:str});//gui du lieu khi su dung ejs
+            res.render('index',{main:main,str:str, link: link});//gui du lieu khi su dung ejs
         }
     });
 });

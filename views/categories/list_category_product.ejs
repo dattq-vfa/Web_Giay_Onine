@@ -1,14 +1,14 @@
 <div class="main_content">
   <div class="row" style="padding-bottom: 10px;">
-    <div class="col-md-5">
-      <a href="list_categories" class="btn btn-primary"><i class="fa fa-arrow-circle-left" style="font-size:24px"></i> </a>
-      <a href="list_categories/list_delete" class="btn btn-warning"><i class="fa fa-trash-o" style="font-size:24px"></i> List deleted</a>
+    <div class="col-md-7">
+      <a href="list_categories/1" class="btn btn-primary"><i class="fa fa-arrow-circle-left" style="font-size:24px"></i> </a>
+      <a href="list_delete_categories" class="btn btn-warning"><i class="fa fa-trash-o" style="font-size:24px"></i> List deleted</a>
       <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" style="font-size:20px"></i> Add Category</button>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-5">
       <form class="form-inline justify-content-end" id="btn_search">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" id="text_search">
-          <button class="btn btn-success" type="submit">Search</button>
+          <label for="text_search" style="font-size: 18px; color: white; padding-right: 5px;">Search: </label>
+          <input class="form-control" type="text" placeholder="Search" id="text_search" style=" border-radius: 5px !important;">
       </form>
     </div>
 </div>
@@ -331,7 +331,7 @@
             data: {id: id},
             success: function (result) {
               alert(result);
-              window.location.href = 'list_categories'; //chuyen trang
+              window.location.href = 'list_categories/1'; //chuyen trang
             }
           });
           return false;
@@ -355,7 +355,7 @@
             success: function (result) {
               alert(result);
               $('#f_delete').text('');
-              window.location.href = 'list_categories/list_delete'; //chuyen trang
+              window.location.href = 'list_delete_categories'; //chuyen trang
             }
           });
           return false;
@@ -370,11 +370,20 @@
             data: {id: id},
             success: function (result) {
               alert(result);
-              window.location.href = 'list_categories/list_delete'; //chuyen trang
+              window.location.href = 'list_delete_categories'; //chuyen trang
             }
           });
           return false;
       });
+
+      $("#text_search").on("keyup", function () {
+        console.log(11111)
+          // var value = $(this).val().toLowerCase();
+          // $("#table tr").filter(function () {
+          //     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          // });
+      });
+
 
     });
 

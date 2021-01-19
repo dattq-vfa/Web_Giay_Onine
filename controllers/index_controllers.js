@@ -20,5 +20,7 @@ router.use('/',contact_controllers);
 const user_controllers = require('./user_controllers');
 router.use('/',user_controllers);
 
+const login_controllers = require('./login_controllers');
+router.use('/',login_controllers);
 
 module.exports = router; //xuat ra du lieu de su dung 

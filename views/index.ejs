@@ -17,18 +17,18 @@
     <div class="container-fluid" style="padding-top: 100px;">
         <div class="sidebar">
             <div class="list-group">
-                <a href="/" class="list-group-item"><i class="fa fa-home"></i> HOME PAGE</a>
+                <a href="/" class="list-group-item <%=link.home%>"><i class="fa fa-home"></i> HOME PAGE</a>
                 <div id="accordion">
-                    <a class="card-link list-group-item" data-toggle="collapse" href="#collapseOne" class="list-group-item">
+                    <a class="card-link list-group-item <%=link.category%>" data-toggle="collapse" href="#collapseOne" class="list-group-item">
                         <i class="fa fa-list-alt"></i> CATEGORIES
                     </a>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
-                        <a href="/list_categories" class="list-group-item">LIST CATEGORIES</a>
+                        <a href="/list_categories/1" class="list-group-item">LIST CATEGORIES</a>
                         <a href="/add_categories" class="list-group-item">ADD CATEGORIES</a>
                     </div>
                 </div> 
                   <div id="accordion1">
-                    <a class="card-link list-group-item" data-toggle="collapse" href="#collapseTwo" class="list-group-item">
+                    <a class="card-link list-group-item <%=link.user%>" data-toggle="collapse" href="#collapseTwo" class="list-group-item">
                         <i class="fa fa-user"></i> Users
                     </a>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion1">
@@ -43,7 +43,7 @@
         <div class="content">
             <div class="main"><%- include(main); %></div>
         </div>
-
+        
     </div>
 </body>
 </html>
