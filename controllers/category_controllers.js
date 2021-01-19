@@ -72,72 +72,7 @@ var link = {home:'',category:'',user:''};
 router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
     main = 'categories/list_category_product';
     link.category = 'active';
-    // 1.limit 
-    let limit = 2;
-    // 2. tong so document 
-    let totalDocument = await CategoryModel.find({status: false})
-    // => tong so trang
-    let totalPage = Math.ceil(totalDocument.length/limit);
-
-    // 3. start 
-    let pageNumber = req.params.pageNumber;
-    if(typeof(pageNumber)=="string") pageNumber = parseInt(pageNumber);
-    else if(pageNumber==undefined) pageNumber=1;
-    if(pageNumber==undefined || pageNumber==1)
-    {
-        start =0 ;
-        //xetActive=1;
-    }
-    else if(pageNumber>=2)
-    {
-        start = (pageNumber-1)*limit;
-        //0 ,2 ,4 ,6
-        //xetActive=page;
-    }
-    //xuat ra view
-    // first
-    view_totalPage=`<li class="page-item">
-    <a class="page-link" href="list_categories/1">First</a></li>`;
-    // Prev
-    if(pageNumber==1)
-    {
-        view_totalPage += `<li class="page-item">
-        <a class="page-link" href="list_categories/`+1+`">Prev</a></li>`;
-    }
-    else
-    {
-        view_totalPage += `<li class="page-item">
-        <a class="page-link" href="list_categories/`+(pageNumber-1)+`">Prev</a></li>`;
-    }
-
-    for(let i = 1; i <= totalPage; i++)
-    {
-        let tmp='';
-        (parseInt(pageNumber)==i) ? tmp = 'active': tmp ='';
-        view_totalPage += `<li class="page-item `+tmp+`">
-        <a class="page-link" href="list_categories/`+i+`">
-        ` + i + `</a></li>`;
-    }
-    // Next
-    if(totalPage>pageNumber)
-    {
-        view_totalPage += `<li class="page-item">
-        <a class="page-link" href="list_categories/`+(pageNumber+1)+`">Next</a></li>`;
-    }
-    else
-    {
-        view_totalPage += `<li class="page-item">
-        <a class="page-link" href="list_categories/`+totalPage+`">Next</a></li>`;
-    }
-
-    // Last
-    view_totalPage += `<li class="page-item">
-    <a class="page-link" href="list_categories/`+totalPage+`">Last</a></li>`;
-
     CategoryModel.find({status: false})
-    .skip(start)// giữ  trang
-    .limit(limit)
-    .sort({_id: -1})
     .exec((err,data)=>{
         if(err)
         {
@@ -162,7 +97,7 @@ router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
                             </tr>`
                 });
             
-            res.render('index', {main: main, str:str, view_totalPage: view_totalPage, link: link});
+            res.render('index', {main: main, str:str,link: link});
         }
     });
 });

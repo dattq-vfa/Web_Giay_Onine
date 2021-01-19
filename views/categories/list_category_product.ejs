@@ -1,15 +1,12 @@
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
 <div class="main_content">
   <div class="row" style="padding-bottom: 10px;">
-    <div class="col-md-7">
+    <div class="col-md-12">
       <a href="list_categories/1" class="btn btn-primary"><i class="fa fa-arrow-circle-left" style="font-size:24px"></i> </a>
       <a href="list_delete_categories" class="btn btn-warning"><i class="fa fa-trash-o" style="font-size:24px"></i> List deleted</a>
       <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" style="font-size:20px"></i> Add Category</button>
-    </div>
-    <div class="col-md-5">
-      <form class="form-inline justify-content-end" id="btn_search">
-          <label for="text_search" style="font-size: 18px; color: white; padding-right: 5px;">Search: </label>
-          <input class="form-control" type="text" placeholder="Search" id="text_search" style=" border-radius: 5px !important;">
-      </form>
     </div>
 </div>
 <table class="table table-dark table-hover" id="table_category">
@@ -29,9 +26,6 @@
     <%- str%>
   </tbody>
 </table>
-  <ul class="pagination justify-content-end">
-    <%-view_totalPage%>
-  </ul>
 </div>
 
 <!------------------------------ The Modal --------------------------------->
@@ -235,6 +229,11 @@
     }
 
     $(document).ready(function(){
+
+      $('#table_category').DataTable({
+        "scrollX": true
+      });
+
       $('#upload_img').on('submit', function(e){
           e.preventDefault();
           let data = new FormData(this);
@@ -375,15 +374,6 @@
           });
           return false;
       });
-
-      $("#text_search").on("keyup", function () {
-        console.log(11111)
-          // var value = $(this).val().toLowerCase();
-          // $("#table tr").filter(function () {
-          //     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          // });
-      });
-
 
     });
 

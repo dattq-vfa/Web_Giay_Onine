@@ -146,13 +146,6 @@ a.page-link:hover{
       .img_login{
         background-attachment: unset !important;
       }
-
-      /* .main{
-        overflow-x: scroll;
-      } */
-      .main .main_contain #table_category{
-        overflow-x: scroll !important;
-      }
       .sidebar {
         width: 100%;
         position: relative;
