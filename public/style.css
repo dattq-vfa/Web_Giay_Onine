@@ -124,6 +124,46 @@ img{
 .main{
   height: 100%;
 }
+/* ---------datatable----------------- */
+.table{
+  margin-bottom: 0px !important;
+  width: 100% !important;
+}
+
+#table_category_length{
+  display: flex;
+  padding: 10px;
+}
+
+#table_category_length label{
+  display: flex;
+  color: white;
+}
+
+#table_category_filter{
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+#table_category_filter label{
+  display: flex;
+  color: white;
+}
+
+#table_category_paginate{
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.arrange_category{
+  cursor: pointer;
+}
+
+
+/* ---------datatable----------------- */
+
 .form-input{
   width: 50%;
   min-width: 320px;
@@ -167,6 +207,15 @@ a.page-link:hover{
       }
       .list-group a{
           text-align: center;
+      }
+
+      .main_content{
+        padding: 0px;
+      }
+
+      #table_category_filter{
+        display: flex;
+        justify-content: flex-start;
       }
   }
 

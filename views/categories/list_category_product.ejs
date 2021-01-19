@@ -1,6 +1,8 @@
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css"></script>
+
 <div class="main_content">
   <div class="row" style="padding-bottom: 10px;">
     <div class="col-md-12">
@@ -12,7 +14,7 @@
 <table class="table table-dark table-hover" id="table_category">
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Name <i class="fa fa-arrow-down arrange_category"></i></th>
       <th>Type</th>
       <th>Group</th>
       <th>Image</th>
@@ -233,6 +235,8 @@
       $('#table_category').DataTable({
         "scrollX": true
       });
+
+      $("#table_category_info").remove();
 
       $('#upload_img').on('submit', function(e){
           e.preventDefault();

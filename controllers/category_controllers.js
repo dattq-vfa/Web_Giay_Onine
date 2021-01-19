@@ -230,8 +230,7 @@ router.get('/list_delete_categories',(req,res)=>{
         {
             str ='';
             data.forEach((v)=>{
-                str += `<tbody id="list_delete`+v._id+`">
-                            <tr>
+                str += `<tr id="list_delete`+v._id+`">
                             <td>`+v.name+`</td>
                             <td>`+v.TYPE+`</td>
                             <td>`+v.Group+`</td>
@@ -243,8 +242,7 @@ router.get('/list_delete_categories',(req,res)=>{
                                 <button class="btn btn-info btn-adjust restore_product"><span style="display:none;">`+JSON.stringify(v._id)+`</span>Restore</button>
                                 <button type="button" class="btn btn-outline-danger btn-adjust list_delete_product"><span style="display:none;">`+JSON.stringify(v)+`</span>Delete</button>
                             </td>
-                            </tr>
-                        </tbody>`
+                        </tr>`
             });
             res.render('index',{main:main,str:str, link: link});//gui du lieu khi su dung ejs
         }
