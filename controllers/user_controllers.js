@@ -147,11 +147,12 @@ router.post('/edit_user',(req,res)=>{
     {
         pattern_pass = /^(?=.*[!@#$%^&*.])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[0-9a-zA-Z!@#$%^&*.]{8,}$/ //?=.*[a-z] giống if sau đó thực hiện [0-9a-zA-Z!@#$%^&*.]{8,}
         subject_pass = password;
-        (pattern_pass.test(subject_pass)) ? check_pass='ok': res.send('Please enter password again!');
+        (pattern_pass.test(subject_pass)) ? check_pass='ok': err+='Please enter password again!';
     }
 
     if(check==4 && check_pass=='ok')
     {
+        console.log(check_pass + ' 1');
         res.send('co pass');
         // const saltRounds= 10; //độ mã hóa
         // //1. tạo chuỗi hash
@@ -186,6 +187,7 @@ router.post('/edit_user',(req,res)=>{
     }
     else if(check==4 && password=='')
     {
+        console.log(check_pass + ' 2');
         res.send('no pass');
         // object = [
         //     {
@@ -213,10 +215,10 @@ router.post('/edit_user',(req,res)=>{
     }
     else
     {
-        res.send(err);
-        err=''
+        err='';
         check=0;
-        check_pass==''
+        check_pass=='';
+        res.send(err);
     }
 });
 

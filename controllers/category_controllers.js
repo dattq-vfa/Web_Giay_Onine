@@ -216,7 +216,6 @@ router.get('/add_categories',(req,res)=>{
     res.render('index',{main:main, link: link});//gui du lieu khi su dung ejs
 });
 
-
 router.get('/list_delete_categories',(req,res)=>{
     main = 'categories/list_category_product';
     link.category = 'active';
@@ -259,7 +258,7 @@ router.post('/update_status_product',(req,res)=>{
             }
             else
             {
-                res.send('da xoa')
+                res.send('da xoa');
             }
     });
 });
