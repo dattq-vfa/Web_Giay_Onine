@@ -12,7 +12,7 @@ const jwt = require('jsonwebtoken');
 var LocalStorage = require('node-localstorage').LocalStorage;
 localStorage = new LocalStorage('./cratch');
 
-var link = {home:'',category:'',user:''};
+var link = {home:'',category:'',user:'', banner:''};
 
 router.get('/user',(req,res)=>{
     main = 'users/list_user';

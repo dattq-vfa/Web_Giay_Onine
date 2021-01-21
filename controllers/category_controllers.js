@@ -67,7 +67,7 @@ var limits = {fileSize: 1024*5000}; // hieu la 200kb
 // Gọi ra sử dụng
 var upload = multer({storage: storage, limits: limits });
 
-var link = {home:'',category:'',user:''};
+var link = {home:'',category:'',user:'', banner:''};
 //---------------------phân trang---------------------------------
 router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
     main = 'categories/list_category_product';

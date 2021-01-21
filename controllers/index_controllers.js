@@ -23,4 +23,8 @@ router.use('/',user_controllers);
 const login_controllers = require('./login_controllers');
 router.use('/',login_controllers);
 
+const banner_controllers = require('./banner_controllers');
+router.use('/',banner_controllers);
+
+
 module.exports = router; //xuat ra du lieu de su dung 
