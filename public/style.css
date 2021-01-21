@@ -130,23 +130,23 @@ img{
   width: 100% !important;
 }
 
-#table_category_length{
+#table_category_length, #table_user_length{ 
   display: flex;
-  padding: 10px;
+  padding: 10px 0px;
 }
 
-#table_category_length label{
+#table_category_length label , #table_user_length label{
   display: flex;
   color: white;
 }
 
-#table_category_filter{
+#table_category_filter, #table_user_filter{
   display: flex;
   justify-content: flex-end;
-  padding: 10px;
+  padding: 10px 0px;
 }
 
-#table_category_filter label{
+#table_category_filter label, #table_user_filter label{
   display: flex;
   color: white;
 }
