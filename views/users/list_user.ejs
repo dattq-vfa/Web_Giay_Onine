@@ -140,7 +140,7 @@
   <!-----------------EDIT Modal --------------------------->
   
   <!-----------------DELETE Temporary Modal --------------------------->
-  <div class="modal" id="myModal-delete-tmp">
+  <div class="modal" id="myModal-delete-user">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -150,12 +150,12 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                Bạn có muốn xóa <span id="f_delete_name_tmp"></span> không?
+                Bạn có muốn xóa <span id="f_delete_name_user"></span> không?
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" id="btn_delete_tmp" class="btn btn-danger" data-dismiss="modal"><span id="f_delete_tmp" style="display: none;"></span>Xóa ngay</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Thoát</button>
+                <button type="button" id="btn_delete_user" class="btn btn-danger" data-dismiss="modal"><span id="f_delete_user" style="display: none;"></span>Xóa ngay</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Thoát</button>
             </div>
         </div>
     </div>
@@ -177,7 +177,7 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" id="delete_database_product" class="btn btn-danger" data-dismiss="modal"><span id="f_delete" style="display: none;"></span>Xóa ngay</button>
+                <button type="button" id="delete_database_user" class="btn btn-danger" data-dismiss="modal"><span id="f_delete" style="display: none;"></span>Xóa ngay</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Thoát</button>
             </div>
         </div>
@@ -263,67 +263,67 @@
             $("#myModaledit").modal('show');
         });
 
-        // $('.delete_product_tmp').on('click', function(e){
-        //     e.preventDefault();
-        //     let delete_product = $.parseJSON($.trim($(this).find('span').text()));
-        //     $('#f_delete_name_tmp').text(delete_product.name);
-        //     $('#f_delete_tmp').text(delete_product._id);
-        //     $("#myModal-delete-tmp").modal('show');
-        // });
+        $('.delete_user_tmp').on('click', function(e){
+            e.preventDefault();
+            let delete_user = $.parseJSON($.trim($(this).find('span').text()));
+            $('#f_delete_name_user').text(delete_user.name);
+            $('#f_delete_user').text(delete_user._id);
+            $("#myModal-delete-user").modal('show');
+        });
 
-        // $('#btn_delete_tmp').on('click', function(e){
-        //     e.preventDefault();
-        //     id = $(this).find('span').text();
-        //     $.ajax({
-        //     url: 'update_status_product',
-        //     type: 'POST',
-        //     data: {id: id},
-        //     success: function (result) {
-        //         alert(result);
-        //         window.location.href = 'user'; //chuyen trang
-        //     }
-        //     });
-        //     return false;
-        // });
+        $('#btn_delete_user').on('click', function(e){
+            e.preventDefault();
+            id = $(this).find('span').text();
+            $.ajax({
+                url: 'update_status_user',
+                type: 'POST',
+                data: {id: id},
+                success: function (result) {
+                    alert(result);
+                    window.location.href = 'user'; //chuyen trang
+                }
+            });
+            return false;
+        });
 
-        // $('.list_delete_product').on('click', function(e){
-        //     e.preventDefault();
-        //     let list_delete_product = $.parseJSON($.trim($(this).find('span').text()));
-        //     $('#f_delete_name').text("vĩnh viễn " + list_delete_product.name);
-        //     $('#f_delete').text(JSON.stringify(list_delete_product));
-        //     $("#myModal-list-delete").modal('show');
-        // });
+        $('.list_delete_user').on('click', function(e){
+            e.preventDefault();
+            let list_delete_user = $.parseJSON($.trim($(this).find('span').text()));
+            $('#f_delete_name').text("vĩnh viễn " + list_delete_user.name);
+            $('#f_delete').text(JSON.stringify(list_delete_user));
+            $("#myModal-list-delete").modal('show');
+        });
 
-        // $('#delete_database_product').on('click', function(e){
-        //     e.preventDefault();
-        //     let database_product = $(this).find('span').text();
-        //     $.ajax({
-        //     url: 'delete_product',
-        //     type: 'POST',
-        //     data: {database_product:database_product},
-        //     success: function (result) {
-        //         alert(result);
-        //         $('#f_delete').text('');
-        //         window.location.href = 'list_delete_categories'; //chuyen trang
-        //     }
-        //     });
-        //     return false;
-        // });
+        $('#delete_database_user').on('click', function(e){
+            e.preventDefault();
+            let id = $.parseJSON($.trim($(this).find('span').text()));
+            $.ajax({
+                url: 'delete_user',
+                type: 'POST',
+                data: {id:id},
+                success: function (result) {
+                    alert(result);
+                    $('#f_delete').text('');
+                    window.location.href = 'list_delete_user'; //chuyen trang
+                }
+            });
+            return false;
+        });
 
-        // $('.restore_product').on('click', function(e){
-        //     e.preventDefault();
-        //     id = $.parseJSON($.trim($(this).find('span').text()));
-        //     $.ajax({
-        //     url: 'restore_product',
-        //     type: 'POST',
-        //     data: {id: id},
-        //     success: function (result) {
-        //         alert(result);
-        //         window.location.href = 'list_delete_categories'; //chuyen trang
-        //     }
-        //     });
-        //     return false;
-        // });
+        $('.restore_user').on('click', function(e){
+            e.preventDefault();
+            id = $.parseJSON($.trim($(this).find('span').text()));
+            $.ajax({
+            url: 'restore_user',
+            type: 'POST',
+            data: {id: id},
+            success: function (result) {
+                alert(result);
+                window.location.href = 'list_delete_user'; //chuyen trang
+            }
+            });
+            return false;
+        });
 
     });
 </script>
