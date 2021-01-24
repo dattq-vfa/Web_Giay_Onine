@@ -166,6 +166,7 @@ router.post('/upload_file',(req,res)=>{
 
 router.post('/edit_file',(req,res)=>{
     upload.any()(req, res, function(err){
+        let name_avatar = req.body.e_avatar_img;
         let data_img = req.body.name_img.split(',');
         let list_imgs = req.body.e_list_img.split(',');
         // get list_imgs
@@ -180,7 +181,7 @@ router.post('/edit_file',(req,res)=>{
         }
         else
         {
-            (link_avatar!="") ? avatar = link_avatar : avatar = req.body.e_avatar_img;
+            (link_avatar!="") ? avatar = link_avatar : avatar = name_avatar;
             (link_items.length > 0) ? items = get_list_imgs.concat(link_items) : items = get_list_imgs;
                     obj =  { 
                                 TYPE: req.body.TYPE,
@@ -200,6 +201,7 @@ router.post('/edit_file',(req,res)=>{
                         }
                         else
                         {
+                            if(link_avatar!="") {delete_img(name_avatar,'avatar'); }
                             delete_img(data_img,'avatar');
                             delete_img(data_img,'item');
                             avatar=''; items=['']; get_list_imgs=['']; link_avatar=''; link_items= [];
@@ -325,11 +327,3 @@ function delete_img(data,key_data){
         } 
     } 
 }
-
-// router.post('/SHOW_IMG',(req,res)=>{
-//     let c =[];
-//     fs.readdirSync("./public/uploads/uploads").forEach(file => {
-//         c.push("/public/uploads/uploads/"+file);
-//     });
-//     res.send(c);
-// })
