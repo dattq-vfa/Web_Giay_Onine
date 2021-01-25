@@ -5,6 +5,7 @@ var fs = require('fs');
 //load multer
 const multer = require('multer');
 const CategoryModel = require('../models/category_models');
+const TypeModel = require('../models/type_models');
 //goi localstorage
 var LocalStorage = require('node-localstorage').LocalStorage;
 localStorage = new LocalStorage('./cratch');
@@ -212,10 +213,44 @@ router.post('/edit_file',(req,res)=>{
     });
 });
 
-router.get('/add_categories',(req,res)=>{
-    main = 'categories/add_category_product';
+router.get('/add_type',(req,res)=>{
+    main = 'categories/add_type';
     link.category = 'active';
-    res.render('index',{main:main, link: link});//gui du lieu khi su dung ejs
+    TypeModel.find()
+    .exec((err,data)=>{
+        if(err)
+        {
+            res.send({kq: 0, err: err})
+        }
+        else
+        {
+            str ='';
+                data.forEach((v)=>{
+                    str +=  `<tr id="`+v._id+`">
+                                <td></td>
+                                <td>`+v.TYPE+`</td>
+                                <td>
+                                    <button class="btn btn-info btn-adjust edit_type"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fas fa-pencil-alt""></i></button>
+                                    <button type="button" class="btn btn-danger btn-adjust delete_type"><span style="display:none;">`+JSON.stringify(v._id)+`</span><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>`
+                });
+            
+            res.render('index', {main: main, str:str,link: link});
+        }
+    });
+});
+
+router.post('/add_type_category',(req,res)=>{
+    obj = [
+        {
+            TYPE: req.body.TYPE,
+            id_category: localStorage.getItem('id_user')
+        }
+    ];
+    TypeModel.create(obj,(err,data_token)=>{
+        (err) ? res.send('err name type already exit!'):res.send("ok");
+    });
 });
 
 router.get('/list_delete_categories',(req,res)=>{
@@ -235,7 +270,7 @@ router.get('/list_delete_categories',(req,res)=>{
                             <td>`+v.name+`</td>
                             <td>`+v.TYPE+`</td>
                             <td>`+v.Group+`</td>
-                            <td>`+v.img+`</td>
+                            <td><img src="/public/uploads/uploads/`+v.img+`" alt="`+v.img+`"></td>
                             <td>`+v.price+`</td>
                             <td>`+v.quantity+`</td>
                             <td>`+v.description+`</td>

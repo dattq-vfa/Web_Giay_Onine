@@ -1,0 +1,67 @@
+<div class="main_content">
+  <div style="display: flex; justify-content: space-between; padding: 10px 0px;">
+    <span style="color: white; align-items: center; display: flex; font-size: 18pt;">Manage Category:</span> 
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal-type"><i class="fa fa-plus" style="font-size:20px"></i> Add Type Category</button>
+  </div>
+  <table class="table table-dark table-hover" id="table_user">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="table">
+      <%- str%>
+    </tbody>
+  </table>
+</div>
+
+<!-----------------ADD Modal --------------------------->
+<div class="modal" id="myModal-type">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Type Category</h4>
+        <span type="button" class="close" data-dismiss="modal">&times;</span>
+      </div>
+      <form id="Add_Type" method="POST">
+          <!-- Modal body -->   
+          <div class="modal-body">
+            <div class="form-group">
+              <b>Type:</b>
+              <input class="form-control" id="type" name="type" placeholder="Type..." type="text" required>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success"><i class="fa fa-upload"></i> Add</button>
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+      </form> 
+    </div>
+  </div>
+</div>
+<!-----------------ADD Modal --------------------------->
+
+  <script>
+      $(document).ready(function(){
+        $('#Add_Type').on('submit', function(e){
+          e.preventDefault();
+          let TYPE = $('#type').val();
+          e.preventDefault();
+            $.ajax({
+                    url: 'add_type_category',
+                    type: 'POST',
+                    data: {'TYPE':TYPE},
+
+                    success: function (result) {
+                      alert(result);
+                      window.location.href = 'add_type';
+                    }
+                });
+            return false;
+        });
+      })
+  </script>
