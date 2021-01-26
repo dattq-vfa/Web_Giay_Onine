@@ -48,16 +48,12 @@
               <div class="dropdown form-group">
                 <label for="TYPE" class="group" style="font-weight: bold;">Type: 
                   <select id="TYPE" name="TYPE" class="btn btn-primary">
-                    <option value="Boy">Boy</option>
-                    <option value="Girl">Girl</option>
-                    <option value="Child">Child</option>
-                    <option value="Other">Other</option>
+                    <%- option_type%>
                   </select>
                 <label>
                 <label for="Group" class="group" style="font-weight: bold; padding-left: 10px;">Group: 
                   <select id="Group" name="Group" class="btn btn-primary ">
-                    <option value="Classic">Classic</option>
-                    <option value="One Star">One Star</option>
+                    <%- option_group%>
                   </select>
                 </label>
               </div>
@@ -104,16 +100,12 @@
               <div class="dropdown form-group">
                 <label for="TYPE" class="group" style="font-weight: bold;">Type: 
                   <select id="e_TYPE" name="TYPE" class="btn btn-primary">
-                    <option value="Boy">Boy</option>
-                    <option value="Girl">Girl</option>
-                    <option value="Child">Child</option>
-                    <option value="Other">Other</option>
+                    <%- option_type%>
                   </select>
                 <label>
                 <label for="Group" class="group" style="font-weight: bold; padding-left: 10px;">Group: 
                   <select id="e_Group" name="Group" class="btn btn-primary ">
-                    <option value="Classic">Classic</option>
-                    <option value="One Star">One Star</option>
+                    <%- option_group%>
                   </select>
                 </label>
               </div>
@@ -193,7 +185,7 @@
           </div>
           <!-- Modal footer -->
           <div class="modal-footer">
-              <button type="button" id="delete_database_product" class="btn btn-danger" data-dismiss="modal"><span id="f_delete" style="display: none;"></span>Xóa ngay</button>
+              <button type="button" id="delete_database_product" class="btn btn-danger"><span id="f_delete" style="display: none;"></span>Xóa ngay</button>
               <button type="button" class="btn btn-primary" data-dismiss="modal">Thoát</button>
           </div>
       </div>

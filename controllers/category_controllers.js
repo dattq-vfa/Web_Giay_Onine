@@ -6,6 +6,7 @@ var fs = require('fs');
 const multer = require('multer');
 const CategoryModel = require('../models/category_models');
 const TypeModel = require('../models/type_models');
+const GroupModel = require('../models/group_models');
 //goi localstorage
 var LocalStorage = require('node-localstorage').LocalStorage;
 localStorage = new LocalStorage('./cratch');
@@ -14,6 +15,8 @@ let path=[];
 let link_avatar ='';
 let link_items =[] ;
 let dif_name='';
+let option_type ='';
+let option_group = '';
 //cau hinh luu file
 const storage = multer.diskStorage({
     //duong dan luu file
@@ -73,34 +76,40 @@ var link = {home:'',category:'',user:'', banner:''};
 router.get('/list_categories(/:pageNumber)?', async (req,res)=>{
     main = 'categories/list_category_product';
     link.category = 'active';
-    CategoryModel.find({status: false})
-    .exec((err,data)=>{
-        if(err)
-        {
-            res.send({kq: 0, err: err})
-        }
-        else
-        {
-            str ='';
-                data.forEach((v)=>{
-                    str +=  `<tr id="`+v._id+`">
-                                <td>`+v.name+`</td>
-                                <td>`+v.TYPE+`</td>
-                                <td>`+v.Group+`</td>
-                                <td><img src="/public/uploads/uploads/`+v.img+`" alt="`+v.img+`"></td>
-                                <td>`+v.price+`</td>
-                                <td>`+v.quantity+`</td>
-                                <td>`+v.description+`</td>
-                                <td>
-                                    <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fas fa-pencil-alt""></i></button>
-                                    <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>`
-                });
-            
-            res.render('index', {main: main, str:str,link: link});
-        }
-    });
+    let tmp='';
+    async function get_name(){
+        option_group = await get_name_group();
+        option_type = await get_name_type();
+        CategoryModel.find({status: false})
+        .exec((err,data)=>{
+            if(err)
+            {
+                res.send({kq: 0, err: err})
+            }
+            else
+            {
+                str ='';
+                    data.forEach((v)=>{
+                        str +=  `<tr id="`+v._id+`">
+                                    <td>`+v.name+`</td>
+                                    <td>`+v.TYPE+`</td>
+                                    <td>`+v.Group+`</td>
+                                    <td><img src="/public/uploads/uploads/`+v.img+`" alt="`+v.img+`"></td>
+                                    <td>`+v.price+`</td>
+                                    <td>`+v.quantity+`</td>
+                                    <td>`+v.description+`</td>
+                                    <td>
+                                        <button class="btn btn-info btn-adjust edit_product"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fas fa-pencil-alt""></i></button>
+                                        <button type="button" class="btn btn-danger btn-adjust delete_product_tmp"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fas fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>`
+                    });
+                
+                res.render('index', {main: main, str:str,link: link, option_type:option_type, option_group:option_group});
+            }
+        });
+    }
+    get_name();
 });
 
 //---------------------phân trang---------------------------------
@@ -228,10 +237,10 @@ router.get('/add_type',(req,res)=>{
                 data.forEach((v)=>{
                     str +=  `<tr id="`+v._id+`">
                                 <td></td>
-                                <td>`+v.TYPE+`</td>
+                                <td>`+v.Type+`</td>
                                 <td>
                                     <button class="btn btn-info btn-adjust edit_type"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fas fa-pencil-alt""></i></button>
-                                    <button type="button" class="btn btn-danger btn-adjust delete_type"><span style="display:none;">`+JSON.stringify(v._id)+`</span><i class="fas fa-trash-alt"></i></button>
+                                    <button type="button" class="btn btn-danger btn-adjust delete_type"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>`
                 });
@@ -244,12 +253,82 @@ router.get('/add_type',(req,res)=>{
 router.post('/add_type_category',(req,res)=>{
     obj = [
         {
-            TYPE: req.body.TYPE,
-            id_category: localStorage.getItem('id_user')
-        }
+            Type: req.body.Type,
+            id_user: localStorage.getItem('id_user'),
+        },
     ];
-    TypeModel.create(obj,(err,data_token)=>{
+    TypeModel.create(obj,(err,data)=>{
         (err) ? res.send('err name type already exit!'):res.send("ok");
+    });
+});
+
+router.post('/edit_type_category',(req,res)=>{
+    id = req.body.id;
+    obj =  { Type: req.body.Type };
+    TypeModel.updateMany({ _id: id },obj,(err,data)=>{
+        console.log(err);
+        (err) ? res.send("err update type"):res.send('Completed!');
+    });
+});
+
+router.post('/delete_type',(req,res)=>{
+    TypeModel.findByIdAndDelete({ _id: req.body.id},(err,data)=>{
+        (err) ? res.send("err delete type"):res.send('Completed!');
+    });
+});
+
+router.get('/add_group',(req,res)=>{
+    main = 'categories/add_group';
+    link.category = 'active';
+    GroupModel.find()
+    .exec((err,data)=>{
+        if(err)
+        {
+            res.send({kq: 0, err: err})
+        }
+        else
+        {
+            str ='';
+                data.forEach((v)=>{
+                    str +=  `<tr id="`+v._id+`">
+                                <td></td>
+                                <td>`+v.Group+`</td>
+                                <td>
+                                    <button class="btn btn-info btn-adjust edit_group"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fas fa-pencil-alt""></i></button>
+                                    <button type="button" class="btn btn-danger btn-adjust delete_group"><span style="display:none;">`+JSON.stringify(v)+`</span><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>`
+                });
+            
+            res.render('index', {main: main, str:str,link: link});
+        }
+    });
+});
+
+router.post('/add_group_category',(req,res)=>{
+    obj = [
+        {
+            Group: req.body.Group,
+            id_user: localStorage.getItem('id_user'),
+        },
+    ];
+    GroupModel.create(obj,(err,data)=>{
+        (err) ? res.send('err name group already exit!'):res.send("ok");
+    });
+});
+
+router.post('/edit_group_category',(req,res)=>{
+    id = req.body.id;
+    obj =  { Group: req.body.Group };
+    GroupModel.updateMany({ _id: id },obj,(err,data)=>{
+        console.log(err);
+        (err) ? res.send("err update group"):res.send('Completed!');
+    });
+});
+
+router.post('/delete_group',(req,res)=>{
+    GroupModel.findByIdAndDelete({ _id: req.body.id},(err,data)=>{
+        (err) ? res.send("err delete group"):res.send('Completed!');
     });
 });
 
@@ -280,7 +359,7 @@ router.get('/list_delete_categories',(req,res)=>{
                             </td>
                         </tr>`
             });
-            res.render('index',{main:main,str:str, link: link});//gui du lieu khi su dung ejs
+            res.render('index',{main:main,str:str, link: link, option_type:option_type, option_group:option_group});//gui du lieu khi su dung ejs
         }
     });
 });
@@ -289,14 +368,7 @@ router.post('/update_status_product',(req,res)=>{
     id = req.body.id;
     obj =  { status: true };
     CategoryModel.updateMany({ _id: id },obj,(err,data)=>{
-            if(err)
-            {
-                console.log(err);
-            }
-            else
-            {
-                res.send('da xoa');
-            }
+            (err) ? console.log(err):res.send('da xoa');
     });
 });
 
@@ -333,6 +405,47 @@ router.post('/delete_product',(req,res)=>{
 })
 
 module.exports = router; //xuat ra du lieu de su dung
+
+
+function get_name_group(){
+    return new Promise((resolve,reject)=>{
+        GroupModel.find()
+        .exec((err,data)=>{
+            if(err)
+            {
+                res.send({kq: 0, err: err})
+            }
+            else
+            {
+                tmp='';
+                data.forEach((v)=>{
+                    tmp +=  `<option value="`+v.Group+`">`+v.Group+`</option>`;
+                });
+                resolve(tmp);
+            }
+        });
+    }); 
+}
+
+function get_name_type(){
+    return new Promise((resolve,reject)=>{
+        TypeModel.find()
+        .exec((err,data)=>{
+            if(err)
+            {
+                res.send({kq: 0, err: err})
+            }
+            else
+            {
+                tmp='';
+                data.forEach((v)=>{
+                    tmp +=  `<option value="`+v.Type+`">`+v.Type+`</option>`;
+                });
+                resolve(tmp);
+            }
+        });
+    });
+}
 
 function delete_img(data,key_data){
     if(typeof(data)=='string')
